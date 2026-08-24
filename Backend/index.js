@@ -28,19 +28,19 @@ const PaymentRouter = require("./Router/PaymentRouter");
 app.use("/api/payments", PaymentRouter);
 
 
-const MessageRouter = require("./Router/PaymentRouter");
+const MessageRouter = require("./Router/MessageRouter");
 
-app.use("/api/payments", MessageRouter);
-
-
-const ReviewRouter = require("./Router/PaymentRouter");
-
-app.use("/api/payments", ReviewRouter);
+app.use("/api/messages", MessageRouter);
 
 
-const ContractRouter = require("./Router/PaymentRouter");
+const ReviewRouter = require("./Router/ReviewRouter");
 
-app.use("/api/payments", ContractRouter);
+app.use("/api/reviews", ReviewRouter);
+
+
+const ContractRouter = require("./Router/ContractRouter");
+
+app.use("/api/contracts", ContractRouter);
 
 app.use((error, req, res, next) => {
   if (error.name === "MulterError") {

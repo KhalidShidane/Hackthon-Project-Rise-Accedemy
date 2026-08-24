@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import {
   LayoutDashboard,
   Briefcase,
@@ -17,16 +18,14 @@ import {
 
 const FreelancerDashboard = () => {
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
   const imageUrl = user.profileImage
     ? `http://localhost:5000/images/${user.profileImage}`
     : "";
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    window.dispatchEvent(new Event("auth-change"));
+  const handleLogout = () => {
+    logout();
     navigate("/login");
   };
 
@@ -88,7 +87,7 @@ const FreelancerDashboard = () => {
             );
           })}
 
-          <button onClick={logout} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50">
+          <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50">
             <LogOut size={19} />
             Logout
           </button>

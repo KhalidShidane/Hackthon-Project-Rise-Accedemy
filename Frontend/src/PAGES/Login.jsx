@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../context/AuthContext";
 
 const API_URL = "http://localhost:5000/user";
 
 function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,9 +23,7 @@ function Login() {
 
     try {
       const { data } = await axios.post(`${API_URL}/login`, form);
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      window.dispatchEvent(new Event("auth-change"));
+      login(data);
       navigate("/dashboard");
     } catch (requestError) {
       setError(requestError.response?.data?.message || "Login failed. Please try again.");

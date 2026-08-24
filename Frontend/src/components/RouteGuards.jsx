@@ -1,11 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
-
-const hasLoggedInUser = () => Boolean(localStorage.getItem("token") && localStorage.getItem("user"));
+import { useAuth } from "../context/AuthContext";
 
 export function ProtectedRoute() {
-  return hasLoggedInUser() ? <Outlet /> : <Navigate to="/login" replace />;
-}
-
-export function PublicOnlyRoute() {
-  return hasLoggedInUser() ? <Navigate to="/dashboard" replace /> : <Outlet />;
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
 }
