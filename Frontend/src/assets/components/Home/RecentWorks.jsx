@@ -85,8 +85,8 @@ function RecentWorks() {
                   <h3 className="mt-2 text-xl font-bold text-gray-900">{project.name}</h3>
                   <p className="mt-3 flex-1 leading-7 text-gray-600">{project.description}</p>
                   {isAvailable(project.status) && (
-                    <Link to={`/contact?project=${project._id}`} className="mt-5 rounded-lg bg-[#2C65F4] px-4 py-3 text-center text-sm font-semibold text-white transition hover:bg-blue-700">
-                      Invite Job
+                    <Link to={`/contact?project=${project._id}&client=${project.client?._id || ""}&projectName=${encodeURIComponent(project.name)}`} className="mt-5 rounded-lg bg-[#2C65F4] px-4 py-3 text-center text-sm font-semibold text-white transition hover:bg-blue-700">
+                      Apply for Job
                     </Link>
                   )}
                   <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-4 text-sm">

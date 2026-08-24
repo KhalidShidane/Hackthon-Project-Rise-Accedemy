@@ -1,13 +1,18 @@
 import React, { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const Contact = () => {
+  const [searchParams] = useSearchParams();
+  const projectId = searchParams.get("project") || "";
+  const clientId = searchParams.get("client") || "";
+  const projectName = searchParams.get("projectName") || "";
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    subject: "General",
-    message: "",
+    subject: projectId ? "Job Application" : "General",
+    message: projectName ? `I would like to apply for: ${projectName}.` : "",
   });
   const [status, setStatus] = useState({ type: "", message: "" });
   const [isSending, setIsSending] = useState(false);
@@ -30,7 +35,11 @@ const Contact = () => {
       const response = await fetch(`${API_URL}/messages`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          project: projectId || undefined,
+          receiver: clientId || undefined,
+        }),
       });
       const data = await response.json();
 
@@ -83,6 +92,11 @@ const Contact = () => {
         </div>
 
         <div className="p-8">
+          {projectName && (
+            <p className="mb-5 rounded-lg bg-blue-50 p-3 text-sm font-medium text-blue-700">
+              Applying for: {projectName}
+            </p>
+          )}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">
