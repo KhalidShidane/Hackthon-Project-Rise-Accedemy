@@ -33,21 +33,23 @@ const ProjectSchema = new mongoose.Schema({
   },
   deadline : {
     type: Number,
-
     required : true,
+  },
 
-    required : true
-
+  client: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    default: null,
   },
 
 
   status: {
   type: String,
-  enum: ["Pending", "Available"],
+  enum: ["Pending", "Available", "Not Available"],
   default: "Pending",
 },
   
-});
+}, { timestamps: true });
 
 
 module.exports = mongoose.model("Project", ProjectSchema)

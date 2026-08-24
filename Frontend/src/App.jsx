@@ -1,34 +1,42 @@
+<<<<<<< HEAD
 
 import Home from "./PAGES/Home";
+=======
+import { Route, Routes, useLocation } from "react-router-dom";
+import Header from "./assets/components/Header";
+import Footer from "./assets/components/Footer";
+import { ProtectedRoute } from "./assets/components/RouteGuards";
+import Gigs from "./Dashbod/Gigs";
+>>>>>>> 5038e8f30380e728fc05f45483141096978bdd68
 import About from "./PAGES/About";
 import Contact from "./PAGES/Contact";
-import { Routes, Route, useLocation } from "react-router-dom";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import Gigs from "./Dashbod/Gigs";
-import { ProtectedRoute } from "./components/RouteGuards";
+import Home from "./PAGES/Home";
+import Jobs from "./PAGES/Jobs";
 import Login from "./PAGES/Login";
 import Signup from "./PAGES/Signup";
 
 function App() {
-    const location = useLocation();
-    const isDashboard = location.pathname === "/dashboard" || location.pathname === "/gigs";
+  const location = useLocation();
+  const isDashboard = ["/dashboard", "/gigs"].includes(location.pathname);
 
-    return (
-        <>
-            {!isDashboard && <Header />}
+  return (
+    <>
+      {!isDashboard && <Header />}
 
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route element={<ProtectedRoute />}>
-                    <Route path="/dashboard" element={<Gigs />} />
-                    <Route path="/gigs" element={<Gigs />} />
-                </Route>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/jobs" element={<Jobs />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<Gigs />} />
+          <Route path="/gigs" element={<Gigs />} />
+        </Route>
+      </Routes>
 
+<<<<<<< HEAD
             </Routes>
             {!isDashboard && <Footer />}
 
@@ -123,3 +131,11 @@ function App() {
 }
 
 export default App
+=======
+      {!isDashboard && <Footer />}
+    </>
+  );
+}
+
+export default App;
+>>>>>>> 5038e8f30380e728fc05f45483141096978bdd68
