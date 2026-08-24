@@ -5,7 +5,7 @@ import { useAuth } from "../context/auth";
 
 const API_URL = "http://localhost:5000/user";
 const roles = [
-  { value: "client", label: "Client", description: "Post projects and hire freelancers." },
+  { value: "company", label: "Company", description: "Post projects and hire freelancers." },
   { value: "freelancer", label: "Freelancer", description: "Find work and manage your gigs." },
 ];
 

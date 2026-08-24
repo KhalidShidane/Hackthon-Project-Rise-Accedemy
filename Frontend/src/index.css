@@ -1,1 +1,12 @@
 @import "tailwindcss";
+
+/* Keep the administration interface aligned with the Freelancer Hub blue brand. */
+.admin-shell .text-emerald-900, .admin-shell .text-emerald-800, .admin-shell .text-emerald-700, .admin-shell .text-emerald-600 { color: #2C65F4 !important; }
+.admin-shell .bg-emerald-50 { background-color: #eff6ff !important; }
+.admin-shell .bg-emerald-100 { background-color: #dbeafe !important; }
+.admin-shell .border-emerald-100, .admin-shell .border-emerald-200 { border-color: #bfdbfe !important; }
+.admin-shell .focus\:border-emerald-600:focus { border-color: #2C65F4 !important; }
+.admin-shell .focus\:ring-emerald-100:focus { --tw-ring-color: #dbeafe !important; }
+.admin-shell .hover\:bg-emerald-50:hover { background-color: #eff6ff !important; }
+.admin-shell .bg-emerald-600 { background-color: #2C65F4 !important; }
+.admin-shell .hover\:bg-emerald-700:hover { background-color: #1d4ed8 !important; }
