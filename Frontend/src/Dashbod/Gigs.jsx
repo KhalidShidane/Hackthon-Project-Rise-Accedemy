@@ -1,85 +1,90 @@
-import { useNavigate } from "react-router-dom";
-import {
-  BarChart3,
-  BriefcaseBusiness,
-  Download,
-  FileText,
-  LayoutDashboard,
-  LogOut,
-  MessageSquare,
-  Search,
-  Store,
-  UserRound,
-  Users,
-} from "lucide-react";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Bell, BriefcaseBusiness, CheckCircle2, CircleDollarSign, LayoutDashboard, LogOut, Mail, MessageSquare, Plus, Search, Send, Trash2, UserRound, Users } from "lucide-react";
 import { useAuth } from "../context/auth";
 
-const menuItems = [
-  { name: "Dashboard", icon: LayoutDashboard, active: true },
-  { name: "Gigs", icon: Store },
-  { name: "Projects", icon: BriefcaseBusiness },
-  { name: "Freelancers", icon: Users },
-  { name: "Messages", icon: MessageSquare, badge: 1 },
-  { name: "Analytics", icon: BarChart3 },
-  { name: "Invoices", icon: FileText },
-  { name: "Export", icon: Download },
+const jobsSeed = [
+  { id: 1, title: "E-commerce website redesign", category: "Web design", budget: "$900", proposals: 12, status: "Open" },
+  { id: 2, title: "Mobile app UI screens", category: "UI/UX design", budget: "$650", proposals: 8, status: "In review" },
 ];
+const nav = [["Dashboard", "/dashboard", LayoutDashboard], ["My jobs", "/projects", BriefcaseBusiness], ["Messages", "/messages", MessageSquare], ["Profile", "/profile", UserRound]];
 
-function ProfileAvatar({ user }) {
-  const imageUrl = user?.profileImage ? `http://localhost:5000/images/${user.profileImage}` : "";
-
-  if (imageUrl) {
-    return <img src={imageUrl} alt={`${user.name} profile`} className="h-10 w-10 rounded-full object-cover" />;
-  }
-
-  return <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 font-bold text-[#2C65F4]">{(user?.name || "U").charAt(0).toUpperCase()}</div>;
+function Avatar({ user, big = false }) {
+  const image = user?.profileImage && `http://localhost:5000/images/${user.profileImage}`;
+  const size = big ? "h-20 w-20 text-2xl" : "h-10 w-10 text-sm";
+  return image ? <img src={image} alt="Profile" className={`${size} rounded-full object-cover`} /> : <span className={`${size} flex items-center justify-center rounded-full bg-blue-100 font-bold text-blue-600`}>{(user?.name || "U")[0].toUpperCase()}</span>;
 }
 
-function Gigs() {
-  const navigate = useNavigate();
-  const { user, logout } = useAuth();
+function Card({ icon: Icon, title, value, note, color = "blue" }) {
+  const colors = { blue: "bg-blue-50 text-blue-600", green: "bg-emerald-50 text-emerald-600", purple: "bg-violet-50 text-violet-600", amber: "bg-amber-50 text-amber-600" };
+  return <article className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm"><div className="flex justify-between"><div><p className="text-sm font-medium text-slate-500">{title}</p><p className="mt-2 text-2xl font-bold text-slate-900">{value}</p></div><span className={`rounded-xl p-3 ${colors[color]}`}><Icon size={21}/></span></div><p className="mt-4 text-xs font-medium text-emerald-600">{note}</p></article>;
+}
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
+function JobImage({ job, className = "" }) {
+  const source = job.image ? (job.image.startsWith("blob:") ? job.image : `http://localhost:5000/images/${job.image}`) : "";
+  return source ? <img src={source} alt={job.title} className={`object-cover ${className}`} /> : <div className={`flex items-center justify-center bg-blue-50 text-blue-600 ${className}`}><BriefcaseBusiness size={22}/></div>;
+}
+
+function Home({ user, jobs, inbox }) {
+  const recent = inbox.slice(0, 3);
+  return <><section className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"><div><h2 className="text-2xl font-bold text-slate-900">Welcome back, {user?.name?.split(" ")[0] || "Client"}!</h2><p className="mt-1 text-sm text-slate-500">Manage your hiring activity from one place.</p></div><Link to="/projects?new=true" className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white hover:bg-blue-700"><Plus size={18}/>Post a job</Link></section><section className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><Card icon={BriefcaseBusiness} title="Active jobs" value={jobs.length} note="2 posted this month"/><Card icon={Users} title="New proposals" value="25" note="18% more than last week" color="green"/><Card icon={MessageSquare} title="Contact messages" value={inbox.length} note="Messages from the contact page" color="purple"/><Card icon={CircleDollarSign} title="Total spent" value="$1,250" note="$420 this month" color="amber"/></section><section className="mt-7 grid gap-6 xl:grid-cols-[1fr_.9fr]"><article className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm"><h3 className="font-bold text-slate-900">Quick actions</h3><p className="mt-1 text-sm text-slate-500">Manage your work without any charts.</p><div className="mt-5 grid gap-3 sm:grid-cols-2"><Link to="/projects?new=true" className="rounded-xl border border-blue-100 bg-blue-50 p-4 text-sm font-semibold text-blue-700">Post a new job</Link><Link to="/messages" className="rounded-xl border border-violet-100 bg-violet-50 p-4 text-sm font-semibold text-violet-700">Open contact inbox</Link><Link to="/profile" className="rounded-xl border border-slate-200 p-4 text-sm font-semibold text-slate-700">Update profile</Link></div></article><article className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm"><div className="flex justify-between"><div><h3 className="font-bold text-slate-900">Contact inbox</h3><p className="mt-1 text-sm text-slate-500">New messages sent from Contact.</p></div><Link to="/messages" className="text-sm font-semibold text-blue-600">View all</Link></div><div className="mt-3 divide-y divide-slate-100">{recent.length ? recent.map(m => <Link key={m._id} to="/messages" className="flex items-center gap-3 py-3"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-xs font-bold">{m.name?.[0]?.toUpperCase()}</span><span className="min-w-0 flex-1"><b className="block truncate text-sm text-slate-800">{m.name}</b><small className="block truncate text-slate-500">{m.subject}: {m.message}</small></span>{!m.isRead && <i className="h-2 w-2 rounded-full bg-blue-600"/>}</Link>) : <p className="py-6 text-sm text-slate-500">No contact messages yet.</p>}</div></article></section><section className="mt-7"><div className="flex items-center justify-between"><div><h3 className="text-lg font-bold text-slate-900">Your latest jobs</h3><p className="text-sm text-slate-500">New jobs appear here immediately after posting.</p></div><Link to="/projects" className="text-sm font-semibold text-blue-600">Manage jobs</Link></div><div className="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{jobs.slice(0, 3).map(job => <article key={job.id || job._id} className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm"><JobImage job={job} className="h-32 w-full"/><div className="p-4"><div className="flex justify-between gap-3"><h4 className="font-semibold text-slate-800">{job.title}</h4><span className="shrink-0 text-sm font-bold text-blue-600">{job.budget || `$${job.Budget}`}</span></div><p className="mt-1 text-sm text-slate-500">{job.category}</p></div></article>)}</div></section></>;
+}
+
+function Jobs({ jobs, setJobs }) {
+  const [formOpen, setFormOpen] = useState(new URLSearchParams(useLocation().search).has("new"));
+  const [form, setForm] = useState({ name: "", category: "Web development", Budget: "", deadline: "", skills: "", description: "", image: null });
+  const [notice, setNotice] = useState("");
+  const [saving, setSaving] = useState(false);
+  const save = async e => {
+    e.preventDefault();
+    setSaving(true);
+    const data = new FormData();
+    ["name", "category", "Budget", "deadline", "skills", "description"].forEach(key => data.append(key, form[key]));
+    data.append("image", form.image);
+    try {
+      const response = await fetch("http://localhost:5000/project", { method: "POST", body: data });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.message);
+      setJobs([{ ...result.project, id: result.project._id, title: result.project.name, budget: `$${result.project.Budget}`, proposals: 0 }, ...jobs]);
+      setNotice("Your job and its image have been posted. It now appears on Dashboard Home.");
+      setFormOpen(false);
+      setForm({ name: "", category: "Web development", Budget: "", deadline: "", skills: "", description: "", image: null });
+    } catch (error) { setNotice(error.message || "Job could not be posted. Please try again."); }
+    finally { setSaving(false); }
   };
-
-  return (
-    <div className="min-h-screen bg-slate-50 lg:pl-[255px]">
-      <aside className="fixed inset-y-0 left-0 z-20 hidden w-[255px] flex-col border-r border-gray-200 bg-white lg:flex">
-        <div className="flex h-[72px] items-center gap-3 px-4">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#2C65F4] text-white shadow-sm"><BriefcaseBusiness size={21} /></div>
-          <div><h1 className="text-[18px] font-bold text-gray-900">FreelanceHub</h1><p className="text-[10px] font-medium tracking-wider text-gray-400">WEB3 MARKETPLACE</p></div>
-        </div>
-
-        <nav className="flex-1 space-y-1 overflow-y-auto px-3 pt-2">
-          {menuItems.map((item) => {
-            const Icon = item.icon;
-            return <button key={item.name} className={`relative flex h-11 w-full items-center gap-3 rounded-xl px-3 text-left text-[15px] font-medium transition-colors ${item.active ? "bg-blue-50 text-[#2C65F4]" : "text-gray-600 hover:bg-blue-50 hover:text-[#2C65F4]"}`}>
-              <Icon size={20} /><span>{item.name}</span>{item.badge && <span className="ml-auto rounded-full bg-orange-500 px-1.5 text-[11px] text-white">{item.badge}</span>}
-            </button>;
-          })}
-          <button className="flex h-11 w-full items-center gap-3 rounded-xl px-3 text-left text-[15px] font-medium text-gray-600 transition-colors hover:bg-blue-50 hover:text-[#2C65F4]"><UserRound size={20} />Profile</button>
-        </nav>
-
-        <div className="border-t border-gray-200 p-3">
-          <button onClick={handleLogout} className="flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-gray-900 px-4 text-[14px] font-medium text-white hover:bg-gray-800"><LogOut size={17} />Logout</button>
-        </div>
-      </aside>
-
-      <main>
-        <header className="flex h-[72px] items-center justify-between border-b border-gray-200 bg-white px-5 md:px-8">
-          <h2 className="text-xl font-bold text-gray-900">Dashboard</h2>
-          <div className="flex items-center gap-4">
-            <label className="hidden items-center gap-2 rounded-lg bg-slate-100 px-3 py-2 md:flex"><Search size={18} className="text-gray-400" /><input placeholder="Search..." className="w-36 bg-transparent text-sm outline-none" /></label>
-            <div className="flex items-center gap-2"><ProfileAvatar user={user} /><div className="hidden sm:block"><p className="text-sm font-semibold text-gray-800">{user?.name || "User"}</p><p className="text-xs capitalize text-gray-500">{user?.role || "Member"}</p></div></div>
-          </div>
-        </header>
-
-        <section className="p-5 md:p-8"><h3 className="text-2xl font-bold text-gray-800">Welcome back, {user?.name || "User"}!</h3><p className="mt-1 text-gray-500">Manage your freelance work from one place.</p></section>
-      </main>
-    </div>
-  );
+  const fields = [["Job title", "name", "text", "Build a company website"], ["Category", "category", "text", "Web development"], ["Budget (USD)", "Budget", "number", "500"], ["Deadline (days)", "deadline", "number", "14"], ["Required skills", "skills", "text", "React, Node.js"]];
+  return <><section className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"><div><h2 className="text-2xl font-bold text-slate-900">My jobs</h2><p className="mt-1 text-sm text-slate-500">Create and manage work you want to hire for.</p></div><button onClick={() => setFormOpen(true)} className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white"><Plus size={18}/>Post a job</button></section>{notice && <p className="mt-5 flex gap-2 rounded-xl bg-emerald-50 p-3 text-sm text-emerald-700"><CheckCircle2 size={18}/>{notice}</p>}{formOpen && <form onSubmit={save} className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"><div className="flex justify-between"><h3 className="font-bold">Create a new job</h3><button type="button" onClick={() => setFormOpen(false)} className="text-sm text-slate-500">Cancel</button></div><div className="mt-5 grid gap-4 md:grid-cols-2">{fields.map(([title, key, type, placeholder]) => <label key={key} className="text-sm font-semibold text-slate-700">{title}<input required type={type} value={form[key]} placeholder={placeholder} onChange={e => setForm({...form, [key]: e.target.value})} className="mt-1.5 w-full rounded-xl border border-slate-200 px-3 py-2.5 font-normal outline-none focus:border-blue-500"/></label>)}<label className="text-sm font-semibold text-slate-700 md:col-span-2">Project image<input required type="file" accept="image/*" onChange={e => setForm({...form, image: e.target.files?.[0] || null})} className="mt-1.5 block w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-normal file:mr-3 file:rounded-lg file:border-0 file:bg-blue-50 file:px-3 file:py-1.5 file:font-semibold file:text-blue-600"/>{form.image && <img src={URL.createObjectURL(form.image)} alt="Job preview" className="mt-3 h-32 w-48 rounded-xl object-cover"/>}</label><label className="text-sm font-semibold text-slate-700 md:col-span-2">Project description<textarea required rows="3" value={form.description} onChange={e => setForm({...form, description: e.target.value})} className="mt-1.5 w-full rounded-xl border border-slate-200 px-3 py-2.5 font-normal outline-none focus:border-blue-500" placeholder="Describe the work and deliverables."/></label></div><button disabled={saving} className="mt-5 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-60">{saving ? "Publishing..." : "Publish job"}</button></form>}<section className="mt-6 overflow-x-auto rounded-2xl border border-slate-100 bg-white shadow-sm"><table className="min-w-full text-left"><thead className="bg-slate-50 text-xs uppercase text-slate-400"><tr><th className="px-5 py-3">Job</th><th className="px-5 py-3">Budget</th><th className="px-5 py-3">Proposals</th><th className="px-5 py-3">Status</th></tr></thead><tbody>{jobs.map(job => <tr key={job.id || job._id} className="border-t border-slate-100"><td className="px-5 py-4"><div className="flex items-center gap-3"><JobImage job={job} className="h-10 w-12 rounded-lg"/><span><b className="block text-sm text-slate-800">{job.title || job.name}</b><small className="text-slate-500">{job.category}</small></span></div></td><td className="px-5 py-4 text-sm font-semibold">{job.budget || `$${job.Budget}`}</td><td className="px-5 py-4 text-sm">{job.proposals || 0}</td><td className="px-5 py-4"><span className="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">{job.status}</span></td></tr>)}</tbody></table></section></>;
 }
 
-export default Gigs;
+function Messages({ inbox, setInbox }) {
+  const [selected, setSelected] = useState(null);
+  const [reply, setReply] = useState("");
+  const open = async message => {
+    const readMessage = { ...message, isRead: true };
+    setSelected(readMessage);
+    if (!message.isRead) {
+      setInbox(inbox.map(item => item._id === message._id ? readMessage : item));
+      try { await fetch(`http://localhost:5000/api/contact-messages/${message._id}/read`, { method: "PUT" }); } catch {}
+    }
+  };
+  const remove = async () => {
+    if (!selected || !window.confirm("Delete this message?")) return;
+    try {
+      const response = await fetch(`http://localhost:5000/api/contact-messages/${selected._id}`, { method: "DELETE" });
+      if (!response.ok) throw new Error();
+      setInbox(inbox.filter(item => item._id !== selected._id));
+      setSelected(null);
+    } catch { alert("Message could not be deleted. Please try again."); }
+  };
+  return <><div className="flex items-center justify-between"><div><h2 className="text-2xl font-bold text-slate-900">Contact inbox</h2><p className="mt-1 text-sm text-slate-500">Read every message sent from the Contact page.</p></div><span className="rounded-full bg-blue-50 px-3 py-1 text-sm font-semibold text-blue-700">{inbox.length} messages</span></div><section className="mt-6 grid min-h-[530px] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm md:grid-cols-[330px_1fr]"><div className="bg-slate-50/70 p-3"><div className="mb-3 flex items-center gap-2 rounded-xl bg-white px-3 py-2 text-sm text-slate-500 shadow-sm"><Mail size={16}/> Incoming messages</div>{inbox.length ? inbox.map(m => <button onClick={() => open(m)} key={m._id} className={`mb-2 flex w-full gap-3 rounded-xl p-3 text-left transition ${selected?._id === m._id ? "bg-blue-600 text-white shadow-md" : !m.isRead ? "border border-blue-100 bg-white shadow-sm" : "bg-white/60 hover:bg-white"}`}><span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-xs font-bold ${selected?._id === m._id ? "bg-white/20" : "bg-blue-100 text-blue-700"}`}>{m.name?.[0]?.toUpperCase()}</span><span className="min-w-0 flex-1"><span className="flex items-center justify-between gap-2"><b className="truncate text-sm">{m.name}</b>{!m.isRead && selected?._id !== m._id && <i className="h-2 w-2 shrink-0 rounded-full bg-orange-500"/>}</span><small className={`block truncate ${selected?._id === m._id ? "text-blue-100" : "text-slate-500"}`}>{m.subject}</small></span></button>) : <p className="p-5 text-sm text-slate-500">No messages received from Contact yet.</p>}</div><div className="flex min-w-0 flex-col">{selected ? <><div className="flex items-start justify-between gap-4 border-b border-slate-100 p-5"><div><h3 className="font-bold text-slate-900">{selected.subject}</h3><p className="mt-1 text-sm font-medium text-slate-700">From: {selected.name}</p><p className="text-sm text-blue-600">{selected.email}</p></div><button onClick={remove} className="inline-flex items-center gap-2 rounded-lg border border-red-200 px-3 py-2 text-sm font-semibold text-red-600 hover:bg-red-50"><Trash2 size={16}/>Delete</button></div><div className="flex-1 bg-slate-50/60 p-6"><div className="max-w-xl rounded-2xl rounded-tl-sm border border-slate-100 bg-white p-4 text-sm leading-6 text-slate-700 shadow-sm">{selected.message}</div></div><form onSubmit={e => { e.preventDefault(); if (reply.trim()) setReply(""); }} className="flex gap-2 border-t border-slate-100 p-4"><input value={reply} onChange={e => setReply(e.target.value)} placeholder="Reply feature coming next..." className="min-w-0 flex-1 rounded-xl border border-slate-200 px-3 py-2.5 text-sm outline-none"/><button className="rounded-xl bg-blue-600 px-3 text-white"><Send size={18}/></button></form></> : <div className="flex flex-1 flex-col items-center justify-center gap-3 p-6 text-center text-slate-500"><Mail size={32} className="text-blue-300"/><p>Select a message to view the sender's email and full message.</p></div>}</div></section></>;
+}
+
+function Profile({ user }) { return <><div><h2 className="text-2xl font-bold text-slate-900">My profile</h2><p className="mt-1 text-sm text-slate-500">Keep your account details up to date.</p></div><section className="mt-6 max-w-3xl rounded-2xl border border-slate-100 bg-white p-6 shadow-sm"><div className="flex items-center gap-4 border-b border-slate-100 pb-6"><Avatar user={user} big/><div><h3 className="text-lg font-bold">{user?.name || "Client"}</h3><p className="text-sm capitalize text-slate-500">{user?.role || "Client"} account</p></div></div><div className="mt-6 grid gap-5 sm:grid-cols-2"><label className="text-sm font-semibold">Full name<input defaultValue={user?.name || ""} className="mt-1.5 w-full rounded-xl border border-slate-200 px-3 py-2.5 font-normal outline-none"/></label><label className="text-sm font-semibold">Email address<input defaultValue={user?.email || ""} className="mt-1.5 w-full rounded-xl border border-slate-200 px-3 py-2.5 font-normal outline-none"/></label><label className="text-sm font-semibold sm:col-span-2">About your company<textarea rows="4" defaultValue="We are looking for talented freelancers to help us build exceptional digital products." className="mt-1.5 w-full rounded-xl border border-slate-200 px-3 py-2.5 font-normal outline-none"/></label></div><button className="mt-6 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white">Save changes</button></section></>;
+}
+
+export default function Gigs() {
+  const { user, logout } = useAuth(); const navigate = useNavigate(); const { pathname } = useLocation(); const [jobs, setJobs] = useState(jobsSeed); const [inbox, setInbox] = useState([]);
+  useEffect(() => { fetch("http://localhost:5000/api/contact-messages").then(response => response.ok ? response.json() : []).then(setInbox).catch(() => setInbox([])); }, []);
+  const content = pathname === "/projects" ? <Jobs jobs={jobs} setJobs={setJobs}/> : pathname === "/messages" ? <Messages inbox={inbox} setInbox={setInbox}/> : pathname === "/profile" ? <Profile user={user}/> : <Home user={user} jobs={jobs} inbox={inbox}/>;
+  return <div className="min-h-screen bg-slate-50 lg:pl-[250px]"><aside className="fixed inset-y-0 left-0 z-20 hidden w-[250px] flex-col border-r border-slate-200 bg-white lg:flex"><div className="flex h-[72px] items-center gap-3 px-5"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white"><BriefcaseBusiness size={21}/></span><div><h1 className="text-lg font-bold">FreelanceHub</h1><p className="text-[10px] font-semibold tracking-wider text-slate-400">CLIENT PORTAL</p></div></div><nav className="flex-1 space-y-1 px-3 pt-4">{nav.map(([label, to, Icon]) => <Link key={label} to={to} className={`flex h-11 items-center gap-3 rounded-xl px-3 text-sm font-medium ${pathname === to || (to === "/dashboard" && pathname === "/gigs") ? "bg-blue-50 text-blue-600" : "text-slate-600 hover:bg-slate-50"}`}><Icon size={19}/>{label}{label === "Messages" && inbox.filter(m => !m.isRead).length > 0 && <span className="ml-auto rounded-full bg-orange-500 px-1.5 py-0.5 text-[10px] text-white">{inbox.filter(m => !m.isRead).length}</span>}</Link>)}</nav><div className="border-t border-slate-100 p-3"><button onClick={() => {logout(); navigate("/login");}} className="flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-slate-900 text-sm font-semibold text-white"><LogOut size={17}/>Logout</button></div></aside><main><header className="flex h-[72px] items-center justify-between border-b border-slate-200 bg-white px-5 md:px-8"><div className="hidden text-xl font-bold lg:block">Client dashboard</div><div className="flex items-center gap-3 lg:hidden"><BriefcaseBusiness className="text-blue-600"/><b>FreelanceHub</b></div><div className="ml-auto flex items-center gap-4"><label className="hidden items-center gap-2 rounded-lg bg-slate-100 px-3 py-2 md:flex"><Search size={17} className="text-slate-400"/><input placeholder="Search..." className="w-32 bg-transparent text-sm outline-none"/></label><button className="relative text-slate-500"><Bell size={20}/>{inbox.some(m => !m.isRead) && <i className="absolute right-0 top-0 h-2 w-2 rounded-full bg-orange-500"/>}</button><Link to="/profile" className="flex items-center gap-2"><Avatar user={user}/><span className="hidden sm:block"><b className="block text-sm">{user?.name || "Client"}</b><small className="capitalize text-slate-500">{user?.role || "Client"}</small></span></Link></div></header><div className="p-5 md:p-8">{content}</div></main></div>;
+}

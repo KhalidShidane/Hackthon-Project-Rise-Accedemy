@@ -1,26 +1,27 @@
 import { Link } from "react-router-dom";
+import { ArrowRight, Briefcase, Code, Palette, Users } from "lucide-react";
+
+const categories = [
+  [Code, "Technology", "Developers and IT professionals"],
+  [Palette, "Creative", "Designers and creative experts"],
+  [Briefcase, "Business", "Professional services"],
+];
 
 function About() {
   return (
-    <main className="min-h-screen bg-slate-50 px-6 py-16 text-slate-800">
-      <section className="mx-auto max-w-4xl rounded-2xl bg-white p-8 shadow-sm md:p-12">
-        <p className="text-sm font-semibold uppercase tracking-wider text-[#2C65F4]">
-          FreelanceHub Somalia
-        </p>
-        <h1 className="mt-3 text-4xl font-bold text-slate-900">About us</h1>
-        <p className="mt-6 text-lg leading-8 text-slate-600">
-          We connect Somali freelancers with clients looking for professional digital services.
-        </p>
-        <p className="mt-4 leading-7 text-slate-600">
-          Create a profile, discover projects that suit your skills, and build lasting professional relationships.
-        </p>
-        <div className="mt-8 flex flex-wrap gap-4">
-          <Link to="/signup" className="rounded-lg bg-[#2C65F4] px-5 py-3 font-semibold text-white hover:bg-blue-700">
-            Join FreelanceHub
-          </Link>
-          <Link to="/jobs" className="rounded-lg border border-slate-300 px-5 py-3 font-semibold text-slate-700 hover:bg-slate-100">
-            Browse jobs
-          </Link>
+    <main className="min-h-screen bg-[#f7f9fc] pb-20 text-slate-900">
+      <section className="border-b border-slate-200 bg-white">
+        <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 lg:py-24">
+          <p className="text-sm font-bold uppercase tracking-widest text-[#2C65F4]">About FreelanceHub</p>
+          <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight sm:text-6xl">Better work begins with the right people.</h1>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">FreelanceHub connects clients with trusted talent and helps freelancers find meaningful opportunities.</p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link to="/jobs" className="inline-flex items-center gap-2 rounded-lg bg-[#2C65F4] px-5 py-3 text-sm font-semibold text-white">Find work <ArrowRight size={17} /></Link>
+            <Link to="/freelancers" className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700">Find talent <Users size={17} /></Link>
+          </div>
+          <div className="mt-12 grid gap-5 sm:grid-cols-3">
+            {categories.map(([Icon, title, description]) => <article key={title} className="rounded-2xl bg-blue-50 p-6"><Icon className="text-blue-600" size={30} /><h2 className="mt-4 font-bold">{title}</h2><p className="mt-2 text-sm text-slate-600">{description}</p></article>)}
+          </div>
         </div>
       </section>
     </main>

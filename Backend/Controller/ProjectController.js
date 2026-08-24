@@ -3,7 +3,10 @@ const Project = require("../Model/Project");
 
 const createProject = async (req, res) => {
   try {
-    const project = await Project.create(req.body);
+    const project = await Project.create({
+      ...req.body,
+      image: req.file ? req.file.filename : req.body.image,
+    });
 
     res.status(201).json({
       message: "Project created successfully",
