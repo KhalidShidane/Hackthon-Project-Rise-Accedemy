@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../context/auth";
 
 const API_URL = "http://localhost:5000/user";
 const roles = [
@@ -10,6 +11,7 @@ const roles = [
 
 function Signup() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [form, setForm] = useState({ name: "", email: "", password: "", role: "client", profileImage: null });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -33,9 +35,7 @@ function Signup() {
       if (form.profileImage) formData.append("profileImage", form.profileImage);
 
       const { data } = await axios.post(`${API_URL}/signup`, formData);
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      window.dispatchEvent(new Event("auth-change"));
+      login(data);
       navigate("/dashboard");
     } catch (requestError) {
       setError(requestError.response?.data?.message || "Could not create your account.");

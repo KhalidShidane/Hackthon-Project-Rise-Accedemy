@@ -2,24 +2,41 @@ const mongoose = require("mongoose");
 
 const messageSchema = new mongoose.Schema(
   {
-    sender: {
+    name: {
+      type: String,
+      trim: true,
+      required: true,
+    },
+
+    email: {
+      type: String,
+      trim: true,
+      lowercase: true,
+      required: true,
+    },
+
+    subject: {
+      type: String,
+      trim: true,
+      required: true,
+    },
+
+    project: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "Project",
+      default: null,
     },
 
     receiver: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-    },
-
-    contract: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Contract",
+      default: null,
     },
 
     message: {
       type: String,
       trim: true,
+      required: true,
     },
 
     isRead: {

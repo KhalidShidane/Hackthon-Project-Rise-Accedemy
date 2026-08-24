@@ -1,40 +1,39 @@
-import Home from "./PAGES/Home";
+import { Route, Routes, useLocation } from "react-router-dom";
+import Header from "./assets/components/Header";
+import Footer from "./assets/components/Footer";
+import { ProtectedRoute } from "./assets/components/RouteGuards";
+import Gigs from "./Dashbod/Gigs";
 import About from "./PAGES/About";
 import Contact from "./PAGES/Contact";
-import { Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
-
-
-import Footer from "./components/Footer";
-
-
-import { ProtectedRoute, PublicOnlyRoute } from "./components/RouteGuards";
-import Gigs from "./Dashbod/Gigs";
+import Home from "./PAGES/Home";
+import Jobs from "./PAGES/Jobs";
 import Login from "./PAGES/Login";
 import Signup from "./PAGES/Signup";
 
 function App() {
-    return (
-        <>
-            <Header />
+  const location = useLocation();
+  const isDashboard = ["/dashboard", "/gigs"].includes(location.pathname);
 
-            <Routes>
-                <Route element={<PublicOnlyRoute />}>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<Signup />} />
-                </Route>
-                <Route element={<ProtectedRoute />}>
-                    <Route path="/dashboard" element={<Gigs />} />
-                    <Route path="/gigs" element={<Gigs />} />
-                </Route>
+  return (
+    <>
+      {!isDashboard && <Header />}
 
-            </Routes>
-            <Footer />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/jobs" element={<Jobs />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<Gigs />} />
+          <Route path="/gigs" element={<Gigs />} />
+        </Route>
+      </Routes>
 
-        </>
-    )
+      {!isDashboard && <Footer />}
+    </>
+  );
 }
+
 export default App;
