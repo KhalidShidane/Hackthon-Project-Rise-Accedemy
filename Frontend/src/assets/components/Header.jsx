@@ -11,8 +11,8 @@ function Header() {
   };
 
   return (
-    <header className="border-b border-gray-100 bg-white">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+    <header className="border-b border-gray-100 bg-white sticky top-0">
+      <div className="mx-auto flex max-w-7xl gap-12 items-center justify-between px-4 ">
         <Link to="/" className="text-2xl font-bold text-[#2C65F4]">
           FreelanceHub
         </Link>
