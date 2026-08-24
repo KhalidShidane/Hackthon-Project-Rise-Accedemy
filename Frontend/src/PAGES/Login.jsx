@@ -24,7 +24,7 @@ function Login() {
     try {
       const { data } = await axios.post(`${API_URL}/login`, form);
       login(data);
-      navigate("/dashboard");
+      navigate(data.user.role === "admin" ? "/admin/dashboard" : data.user.role === "company" ? "/company/dashboard" : "/dashboard");
     } catch (requestError) {
       setError(requestError.response?.data?.message || "Login failed. Please try again.");
     } finally {

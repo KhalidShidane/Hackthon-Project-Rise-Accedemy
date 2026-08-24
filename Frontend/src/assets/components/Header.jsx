@@ -13,6 +13,7 @@ function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const [open, setOpen] = useState(false);
 
   function closeMenu() {
     setMenuOpen(false);

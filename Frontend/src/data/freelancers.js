@@ -9,3 +9,15 @@ export const freelancers = [
   { id: 7, name: "Mohamed Warsame", title: "WordPress Developer", image: "https://i.pravatar.cc/150?img=68", description: "Builds professional WordPress and e-commerce websites that are easy to manage.", skills: ["WordPress", "WooCommerce", "PHP"], location: "Kismayo", hourlyRate: 26, rating: 4.7, jobsCompleted: 22, verified: false, category: "Software Development" },
   { id: 8, name: "Hodan Yusuf", title: "Social Media Manager", image: "https://i.pravatar.cc/150?img=44", description: "Plans and manages social media content that helps Somali brands reach more customers.", skills: ["Social Media", "Content Strategy", "Canva"], location: "Baidoa", hourlyRate: 18, rating: 4.7, jobsCompleted: 17, verified: true, category: "Design & Creative" },
 ];
+
+// The profile page uses this shape, while the Find Talent page uses `freelancers` above.
+export const demoFreelancers = freelancers.map((freelancer) => ({
+  ...freelancer,
+  _id: String(freelancer.id),
+  profileImage: freelancer.image,
+  bio: freelancer.description,
+  about: freelancer.description,
+  background: "Available for freelance projects with Somali and international teams.",
+  education: "Professional freelancer",
+  experience: `${freelancer.jobsCompleted} completed projects`,
+}));
