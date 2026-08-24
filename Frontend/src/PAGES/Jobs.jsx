@@ -70,12 +70,14 @@ function Jobs() {
                   <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-[#2C65F4]"><FiBriefcase size={21} /></span>
                   <span className={`rounded-full px-3 py-1 text-xs font-semibold ${getStatusClasses(project.status)}`}>{project.status}</span>
                 </div>
+                {isAvailable(project.status) && (
+                  <Link to={`/contact?project=${project._id}`} className="mt-5 inline-flex w-full items-center justify-center rounded-lg bg-[#2C65F4] px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-700">
+                    Invite Job
+                  </Link>
+                )}
                 <p className="mt-5 text-sm font-semibold text-[#2C65F4]">{project.category}</p>
                 <h2 className="mt-2 text-xl font-bold text-gray-900">{project.name}</h2>
                 <p className="mt-3 flex-1 leading-7 text-gray-600">{project.description}</p>
-                {isAvailable(project.status) && (
-                  <Link to={`/contact?project=${project._id}`} className="mt-5 rounded-lg bg-[#2C65F4] px-4 py-3 text-center text-sm font-semibold text-white transition hover:bg-blue-700">Invite Job</Link>
-                )}
                 <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-4 text-sm"><span className="font-bold text-gray-900">{project.Budget}</span><span className="inline-flex items-center gap-1 text-gray-500"><FiClock /> {project.deadline} days</span></div>
                 {!isAvailable(project.status) && (
                   <span className="mt-5 rounded-lg bg-gray-100 px-4 py-2.5 text-center text-sm font-semibold text-gray-500">{project.status}</span>
