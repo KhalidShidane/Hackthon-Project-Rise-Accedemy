@@ -1,174 +1,85 @@
-import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
 import {
-  LayoutDashboard,
-  Briefcase,
+  BarChart3,
+  BriefcaseBusiness,
+  Download,
   FileText,
-  MessageSquare,
-  Wallet,
-  User,
-  Settings,
+  LayoutDashboard,
   LogOut,
-  Bell,
+  MessageSquare,
   Search,
-  Menu,
-  X,
+  Store,
+  UserRound,
+  Users,
 } from "lucide-react";
+import { useAuth } from "../context/auth";
 
-const FreelancerDashboard = () => {
+const menuItems = [
+  { name: "Dashboard", icon: LayoutDashboard, active: true },
+  { name: "Gigs", icon: Store },
+  { name: "Projects", icon: BriefcaseBusiness },
+  { name: "Freelancers", icon: Users },
+  { name: "Messages", icon: MessageSquare, badge: 1 },
+  { name: "Analytics", icon: BarChart3 },
+  { name: "Invoices", icon: FileText },
+  { name: "Export", icon: Download },
+];
+
+function ProfileAvatar({ user }) {
+  const imageUrl = user?.profileImage ? `http://localhost:5000/images/${user.profileImage}` : "";
+
+  if (imageUrl) {
+    return <img src={imageUrl} alt={`${user.name} profile`} className="h-10 w-10 rounded-full object-cover" />;
+  }
+
+  return <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 font-bold text-[#2C65F4]">{(user?.name || "U").charAt(0).toUpperCase()}</div>;
+}
+
+function Gigs() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const imageUrl = user.profileImage
-    ? `http://localhost:5000/images/${user.profileImage}`
-    : "";
 
   const handleLogout = () => {
     logout();
     navigate("/login");
   };
 
-  const pages = [
-    { name: "Dashboard", icon: LayoutDashboard },
-    { name: "My Projects", icon: Briefcase },
-    { name: "Proposals", icon: FileText },
-    { name: "Messages", icon: MessageSquare },
-    { name: "Earnings", icon: Wallet },
-    { name: "Profile", icon: User },
-    { name: "Settings", icon: Settings },
-  ];
-
   return (
-    <div className="min-h-screen bg-gray-50 flex">
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/40 z-40 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
-      <aside
-        className={`fixed lg:static z-50 top-0 left-0 h-screen w-64 bg-white border-r border-gray-200 transition-transform duration-300 ${
-          sidebarOpen
-            ? "translate-x-0"
-            : "-translate-x-full lg:translate-x-0"
-        }`}
-      >
-        <div className="h-20 flex items-center justify-between px-6 border-b">
-          <h1 className="text-2xl font-bold text-blue-600">
-            FreeLance
-          </h1>
-
-          <button
-            onClick={() => setSidebarOpen(false)}
-            className="lg:hidden text-gray-500"
-          >
-            <X size={22} />
-          </button>
+    <div className="min-h-screen bg-slate-50 lg:pl-[255px]">
+      <aside className="fixed inset-y-0 left-0 z-20 hidden w-[255px] flex-col border-r border-gray-200 bg-white lg:flex">
+        <div className="flex h-[72px] items-center gap-3 px-4">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#2C65F4] text-white shadow-sm"><BriefcaseBusiness size={21} /></div>
+          <div><h1 className="text-[18px] font-bold text-gray-900">FreelanceHub</h1><p className="text-[10px] font-medium tracking-wider text-gray-400">WEB3 MARKETPLACE</p></div>
         </div>
 
-        <nav className="p-4 space-y-2">
-          {pages.map((page, index) => {
-            const Icon = page.icon;
-
-            return (
-              <button
-                key={page.name}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition ${
-                  index === 0
-                    ? "bg-blue-600 text-white"
-                    : "text-gray-600 hover:bg-blue-50 hover:text-blue-600"
-                }`}
-              >
-                <Icon size={19} />
-                {page.name}
-              </button>
-            );
+        <nav className="flex-1 space-y-1 overflow-y-auto px-3 pt-2">
+          {menuItems.map((item) => {
+            const Icon = item.icon;
+            return <button key={item.name} className={`relative flex h-11 w-full items-center gap-3 rounded-xl px-3 text-left text-[15px] font-medium transition-colors ${item.active ? "bg-blue-50 text-[#2C65F4]" : "text-gray-600 hover:bg-blue-50 hover:text-[#2C65F4]"}`}>
+              <Icon size={20} /><span>{item.name}</span>{item.badge && <span className="ml-auto rounded-full bg-orange-500 px-1.5 text-[11px] text-white">{item.badge}</span>}
+            </button>;
           })}
-
-          <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50">
-            <LogOut size={19} />
-            Logout
-          </button>
+          <button className="flex h-11 w-full items-center gap-3 rounded-xl px-3 text-left text-[15px] font-medium text-gray-600 transition-colors hover:bg-blue-50 hover:text-[#2C65F4]"><UserRound size={20} />Profile</button>
         </nav>
 
-        <div className="absolute bottom-5 left-4 right-4 bg-gray-50 rounded-xl p-3">
-          <div className="flex items-center gap-3">
-            {imageUrl ? (
-              <img src={imageUrl} alt={`${user.name || "User"} profile`} className="w-10 h-10 rounded-full object-cover" />
-            ) : (
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 font-bold text-blue-700">{(user.name || "U").charAt(0).toUpperCase()}</div>
-            )}
-
-            <div>
-              <p className="text-sm font-semibold text-gray-800">
-                {user.name || "User"}
-              </p>
-              <p className="text-xs text-gray-500">
-                {user.role || "Member"}
-              </p>
-            </div>
-          </div>
+        <div className="border-t border-gray-200 p-3">
+          <button onClick={handleLogout} className="flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-gray-900 px-4 text-[14px] font-medium text-white hover:bg-gray-800"><LogOut size={17} />Logout</button>
         </div>
       </aside>
 
-      <main className="flex-1 min-w-0">
-        <header className="h-20 bg-white border-b flex items-center justify-between px-4 md:px-8">
+      <main>
+        <header className="flex h-[72px] items-center justify-between border-b border-gray-200 bg-white px-5 md:px-8">
+          <h2 className="text-xl font-bold text-gray-900">Dashboard</h2>
           <div className="flex items-center gap-4">
-            <button
-              onClick={() => setSidebarOpen(true)}
-              className="lg:hidden text-gray-600"
-            >
-              <Menu size={24} />
-            </button>
-
-            <div>
-              <h2 className="text-xl md:text-2xl font-bold text-gray-800">
-                Dashboard
-              </h2>
-              <p className="text-sm text-gray-500 hidden sm:block">
-                Welcome back
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <div className="hidden md:flex items-center bg-gray-100 rounded-xl px-4 py-2">
-              <Search size={18} className="text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search..."
-                className="bg-transparent outline-none px-2 text-sm"
-              />
-            </div>
-
-            <button className="relative w-10 h-10 flex items-center justify-center rounded-xl hover:bg-gray-100">
-              <Bell size={20} className="text-gray-600" />
-              <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full" />
-            </button>
-
-            {imageUrl ? (
-              <img src={imageUrl} alt={`${user.name || "User"} profile`} className="w-10 h-10 rounded-full object-cover" />
-            ) : (
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 font-bold text-blue-700">{(user.name || "U").charAt(0).toUpperCase()}</div>
-            )}
+            <label className="hidden items-center gap-2 rounded-lg bg-slate-100 px-3 py-2 md:flex"><Search size={18} className="text-gray-400" /><input placeholder="Search..." className="w-36 bg-transparent text-sm outline-none" /></label>
+            <div className="flex items-center gap-2"><ProfileAvatar user={user} /><div className="hidden sm:block"><p className="text-sm font-semibold text-gray-800">{user?.name || "User"}</p><p className="text-xs capitalize text-gray-500">{user?.role || "Member"}</p></div></div>
           </div>
         </header>
 
-        <section className="p-4 md:p-8">
-          <div>
-            <h3 className="text-2xl font-bold text-gray-800">
-              Welcome Back 👋
-            </h3>
-            <p className="text-gray-500 mt-1">
-              Manage your freelance work
-            </p>
-          </div>
-        </section>
+        <section className="p-5 md:p-8"><h3 className="text-2xl font-bold text-gray-800">Welcome back, {user?.name || "User"}!</h3><p className="mt-1 text-gray-500">Manage your freelance work from one place.</p></section>
       </main>
     </div>
   );
-};
+}
 
-export default FreelancerDashboard;
+export default Gigs;

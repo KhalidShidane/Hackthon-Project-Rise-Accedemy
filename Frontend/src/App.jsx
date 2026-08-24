@@ -2,12 +2,9 @@ import Home from "./PAGES/Home";
 import About from "./PAGES/About";
 import Contact from "./PAGES/Contact";
 import { Routes, Route, useLocation } from "react-router-dom";
-import Header from "./components/Header";
-
 import Footer from "./components/Footer";
-
+import Header from "./components/Header";
 import Gigs from "./Dashbod/Gigs";
-
 import { ProtectedRoute } from "./components/RouteGuards";
 import Login from "./PAGES/Login";
 import Signup from "./PAGES/Signup";
