@@ -16,7 +16,7 @@ const createToken = (user) =>
 
 const signup = async (req, res) => {
   try {
-    const { name, email, password, role = "client" } = req.body;
+    const { name, email, password, role = "client", companyName, businessType, website, bio } = req.body;
 
     if (!name || !email || !password) {
       return res.status(400).json({ message: "Name, email and password are required" });
@@ -24,6 +24,14 @@ const signup = async (req, res) => {
 
     if (!["client", "freelancer"].includes(role)) {
       return res.status(400).json({ message: "Role must be client or freelancer" });
+    }
+
+    if (role === "client" && (!companyName || !businessType)) {
+      return res.status(400).json({ message: "Company name and business type are required for clients" });
+    }
+
+    if (role === "freelancer" && !bio) {
+      return res.status(400).json({ message: "Professional description is required for freelancers" });
     }
 
     const normalizedEmail = email.trim().toLowerCase();
@@ -39,6 +47,10 @@ const signup = async (req, res) => {
       password: hashedPassword,
       role,
       profileImage: req.file ? req.file.filename : "",
+      companyName: role === "client" ? companyName : "",
+      businessType: role === "client" ? businessType : "",
+      website: role === "client" ? website || "" : "",
+      bio: role === "freelancer" ? bio : "",
     });
 
     res.status(201).json({
