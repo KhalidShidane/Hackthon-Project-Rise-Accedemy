@@ -32,10 +32,11 @@ const ProjectSchema = new mongoose.Schema({
     required : true,
   },
   deadline : {
-    type: number,
-    required : true
+    type: Number,
+    required : true,
   },
 
   
 });
 
+module.exports = mongoose.model("Project", ProjectSchema)
