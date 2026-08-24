@@ -1,17 +1,16 @@
-import React from "react";
 import {
-  Users,
-  Briefcase,
-  ShieldCheck,
-  Star,
-  Target,
-  Eye,
-  CheckCircle,
-  ArrowRight,
-  Code,
-  Palette,
-  Megaphone,
-} from "lucide-react";
+  FiUsers as Users,
+  FiBriefcase as Briefcase,
+  FiShield as ShieldCheck,
+  FiStar as Star,
+  FiTarget as Target,
+  FiEye as Eye,
+  FiCheckCircle as CheckCircle,
+  FiArrowRight as ArrowRight,
+  FiCode as Code,
+  FiPenTool as Palette,
+  FiVolume2 as Megaphone,
+} from "react-icons/fi";
 
 const About = () => {
   const stats = [
@@ -104,7 +103,6 @@ const About = () => {
               digital services.
             </p>
 
-            {/* Design-only buttons */}
             <div className="mt-8 flex flex-wrap gap-4">
               <button
                 type="button"
@@ -126,7 +124,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* ================= STATS ================= */}
       <section className="border-b bg-gray-50">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-6 py-10 md:grid-cols-4 lg:px-8">
           {stats.map((stat, index) => (
@@ -143,7 +140,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* ================= WHO WE ARE ================= */}
       <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
         <div className="grid items-center gap-14 lg:grid-cols-2">
 
@@ -247,11 +243,9 @@ const About = () => {
         </div>
       </section>
 
-      {/* ================= MISSION & VISION ================= */}
       <section className="bg-gray-50">
         <div className="mx-auto grid max-w-7xl gap-8 px-6 py-20 md:grid-cols-2 lg:px-8">
 
-          {/* Mission */}
           <div className="rounded-3xl bg-white p-8 shadow-sm transition hover:shadow-md">
             <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-100">
               <Target
@@ -271,7 +265,6 @@ const About = () => {
             </p>
           </div>
 
-          {/* Vision */}
           <div className="rounded-3xl bg-white p-8 shadow-sm transition hover:shadow-md">
             <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-100">
               <Eye
@@ -294,7 +287,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* ================= WHAT WE OFFER ================= */}
       <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
 
         <div className="mx-auto max-w-2xl text-center">
@@ -345,7 +337,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* ================= HOW IT WORKS ================= */}
       <section className="bg-gray-900 text-white">
         <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
 
@@ -386,7 +377,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* ================= CTA ================= */}
       <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
         <div className="overflow-hidden rounded-3xl bg-gradient-to-r from-blue-600 to-indigo-700 px-8 py-14 text-center shadow-xl md:px-16">
 
@@ -399,7 +389,6 @@ const About = () => {
             showcase your skills, Freelancer Hub Somalia is here for you.
           </p>
 
-          {/* Design-only buttons */}
           <div className="mt-8 flex flex-wrap justify-center gap-4">
 
             <button
