@@ -1,4 +1,84 @@
 const UserScheme = require("../Model/UserScheeme");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
+const publicUser = (user) => {
+  const { password, ...userWithoutPassword } = user.toObject();
+  return userWithoutPassword;
+};
+
+const createToken = (user) =>
+  jwt.sign(
+    { userId: user._id.toString(), role: user.role },
+    process.env.JWT_SECRET || "change-this-development-secret",
+    { expiresIn: "7d" }
+  );
+
+const signup = async (req, res) => {
+  try {
+    const { name, email, password, role = "client" } = req.body;
+
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: "Name, email and password are required" });
+    }
+
+    if (!["client", "freelancer"].includes(role)) {
+      return res.status(400).json({ message: "Role must be client or freelancer" });
+    }
+
+    const normalizedEmail = email.trim().toLowerCase();
+    const existingUser = await UserScheme.findOne({ email: normalizedEmail });
+    if (existingUser) {
+      return res.status(409).json({ message: "An account with this email already exists" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 12);
+    const user = await UserScheme.create({
+      name,
+      email: normalizedEmail,
+      password: hashedPassword,
+      role,
+      profileImage: req.file ? req.file.filename : "",
+    });
+
+    res.status(201).json({
+      message: "Account created successfully",
+      token: createToken(user),
+      user: publicUser(user),
+    });
+  } catch (error) {
+    console.log("SIGNUP ERROR:", error);
+    res.status(500).json({ message: "Unable to create account" });
+  }
+};
+
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email and password are required" });
+    }
+
+    const user = await UserScheme.findOne({ email: email.trim().toLowerCase() });
+    if (!user) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    const passwordMatches = await bcrypt.compare(password, user.password);
+    if (!passwordMatches) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    res.status(200).json({
+      message: "Login successful",
+      token: createToken(user),
+      user: publicUser(user),
+    });
+  } catch (error) {
+    console.log("LOGIN ERROR:", error);
+    res.status(500).json({ message: "Unable to log in" });
+  }
+};
 
 // CREATE USER
 const create = async (req, res) => {
@@ -9,7 +89,7 @@ const create = async (req, res) => {
     const newUser = await UserScheme.create({
       name: req.body.name,
       email: req.body.email,
-      password: req.body.password,
+      password: await bcrypt.hash(req.body.password, 12),
       role: req.body.role,
       profileImage: req.file ? req.file.filename : "",
       bio: req.body.bio,
@@ -151,6 +231,8 @@ const deleteUser = async (req, res) => {
 };
 
 module.exports = {
+  signup,
+  login,
   create,
   read,
   getsingle,
