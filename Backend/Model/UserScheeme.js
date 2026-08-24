@@ -16,6 +16,14 @@ const userSchema = new mongoose.Schema(
       trim: true,
     },
 
+    username: {
+      type: String,
+      trim: true,
+      lowercase: true,
+      unique: true,
+      sparse: true,
+    },
+
     password: {
       type: String,
       required: true,
@@ -24,9 +32,17 @@ const userSchema = new mongoose.Schema(
 
     role: {
       type: String,
-      enum: ["client", "freelancer", "admin"],
+      enum: ["client", "company", "freelancer", "admin"],
       default: "client",
     },
+
+    status: {
+      type: String,
+      enum: ["active", "pending", "suspended", "blocked"],
+      default: "active",
+    },
+
+    lastLogin: { type: Date, default: null },
 
     profileImage: {
       type: String,

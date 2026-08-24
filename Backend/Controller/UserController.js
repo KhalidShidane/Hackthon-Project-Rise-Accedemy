@@ -22,8 +22,8 @@ const signup = async (req, res) => {
       return res.status(400).json({ message: "Name, email and password are required" });
     }
 
-    if (!["client", "freelancer"].includes(role)) {
-      return res.status(400).json({ message: "Role must be client or freelancer" });
+    if (!["client", "company", "freelancer"].includes(role)) {
+      return res.status(400).json({ message: "Role must be company, client, or freelancer" });
     }
 
     const normalizedEmail = email.trim().toLowerCase();
@@ -64,10 +64,17 @@ const login = async (req, res) => {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
+    if (user.status && user.status !== "active") {
+      return res.status(403).json({ message: "This account is not currently active" });
+    }
+
     const passwordMatches = await bcrypt.compare(password, user.password);
     if (!passwordMatches) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
+
+    user.lastLogin = new Date();
+    await user.save();
 
     res.status(200).json({
       message: "Login successful",
@@ -105,7 +112,7 @@ const create = async (req, res) => {
 
     res.status(201).json({
       message: "User created successfully",
-      user: newUser,
+      user: publicUser(newUser),
     });
   } catch (error) {
     console.log("FULL ERROR:", error);
@@ -119,7 +126,7 @@ const create = async (req, res) => {
 // GET ALL USERS
 const read = async (req, res) => {
   try {
-    const users = await UserScheme.find();
+    const users = await UserScheme.find().select("-password");
 
     res.status(200).json({
       message: "Users fetched successfully",
@@ -137,7 +144,7 @@ const read = async (req, res) => {
 // GET SINGLE USER
 const getsingle = async (req, res) => {
   try {
-    const user = await UserScheme.findById(req.params.id);
+    const user = await UserScheme.findById(req.params.id).select("-password");
 
     if (!user) {
       return res.status(404).json({
@@ -194,7 +201,7 @@ const update = async (req, res) => {
 
     res.status(200).json({
       message: "User updated successfully",
-      user,
+      user: publicUser(user),
     });
   } catch (error) {
     console.log("UPDATE ERROR:", error);
@@ -218,7 +225,7 @@ const deleteUser = async (req, res) => {
 
     res.status(200).json({
       message: "User deleted successfully",
-      user,
+      user: publicUser(user),
     });
   } catch (error) {
     console.log("DELETE ERROR:", error);

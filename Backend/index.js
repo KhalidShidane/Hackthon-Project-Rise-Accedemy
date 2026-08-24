@@ -9,6 +9,9 @@ const PaymentRouter = require("./Router/PaymentRouter");
 const MessageRouter = require("./Router/MessageRouter");
 const ReviewRouter = require("./Router/ReviewRouter");
 const ContractRouter = require("./Router/ContractRouter");
+const ProposalRouter = require("./Router/ProposalRouter");
+const AdminRouter = require("./Router/AdminRouter");
+const ensureAdmin = require("./utils/ensureAdmin");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -23,6 +26,8 @@ app.use("/messages", MessageRouter);
 app.use("/api/payments", PaymentRouter);
 app.use("/api/reviews", ReviewRouter);
 app.use("/api/contracts", ContractRouter);
+app.use("/api/proposals", ProposalRouter);
+app.use("/api/admin", AdminRouter);
 
 app.use((error, _req, res, _next) => {
   res.status(400).json({ message: error.message || "Request failed" });
@@ -30,7 +35,7 @@ app.use((error, _req, res, _next) => {
 
 mongoose
   .connect("mongodb://localhost:27017/Hackthone")
-  .then(() => console.log("Connected to database"))
+  .then(async () => { console.log("Connected to database"); await ensureAdmin(); })
   .catch((error) => console.error("Database connection failed:", error.message));
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));
