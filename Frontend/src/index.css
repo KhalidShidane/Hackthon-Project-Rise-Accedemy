@@ -10,3 +10,6 @@
 .admin-shell .hover\:bg-emerald-50:hover { background-color: #eff6ff !important; }
 .admin-shell .bg-emerald-600 { background-color: #2C65F4 !important; }
 .admin-shell .hover\:bg-emerald-700:hover { background-color: #1d4ed8 !important; }
+.admin-shell .text-emerald-50 { color: #eff6ff !important; }
+.admin-shell .from-emerald-500 { --tw-gradient-from: #2C65F4 var(--tw-gradient-from-position) !important; --tw-gradient-to: rgb(44 101 244 / 0) var(--tw-gradient-to-position) !important; }
+.admin-shell .to-green-700 { --tw-gradient-to: #1e40af var(--tw-gradient-to-position) !important; }
