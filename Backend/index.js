@@ -1,14 +1,22 @@
-const mongoose =require('mongoose')
+const mongoose = require("mongoose");
 
-const express = require('express')
-
-const App = express();
+const app = express();
 
 
-mongoose.connect("mongodb://localhost:27017/Hackthon").then(()=>{
-    console.log("Data base Connected")
-})
 
-App.listen(5000,()=>{
-    console.log("Server is Runing")
-})
+
+mongoose.connect("mongodb://localhost:27017/Hackthone").then(() => {
+    console.log("connected to database");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+
+
+  
+
+  
+app.listen(5000, () => {
+  console.log("server is running on port 5000");
+});
