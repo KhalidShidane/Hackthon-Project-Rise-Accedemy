@@ -1,0 +1,13 @@
+import { Link } from "react-router-dom";
+import { BadgeCheck, BriefcaseBusiness, Heart, MapPin, Star } from "lucide-react";
+import { API_BASE_URL } from "../services/api";
+
+export default function FreelancerCard({ freelancer, isSaved, onSave, onInvite }) {
+  const imageUrl = freelancer.image?.startsWith("/") ? `${API_BASE_URL}${freelancer.image}` : freelancer.image;
+  return <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-blue-200 hover:shadow-md">
+    <div className="flex items-start justify-between gap-3"><div className="flex min-w-0 items-center gap-3"><img src={imageUrl} alt={freelancer.name} className="h-14 w-14 shrink-0 rounded-full object-cover" /><div className="min-w-0"><h2 className="flex items-center gap-1 font-bold text-slate-900">{freelancer.name}{freelancer.verified && <BadgeCheck size={16} className="fill-blue-700 text-white" />}</h2><p className="truncate text-sm text-slate-500">{freelancer.title}</p></div></div><div className="flex shrink-0 items-start gap-2"><div className="text-right"><p className="font-bold text-slate-900">${freelancer.hourlyRate}<span className="font-normal text-slate-400">/hr</span></p><p className="mt-1 flex items-center justify-end gap-1 text-sm"><Star size={15} className="fill-amber-400 text-amber-400" /><b>{freelancer.rating}</b></p></div><button onClick={onSave} className={isSaved ? "text-rose-500" : "text-slate-400 hover:text-rose-500"} aria-label="Save freelancer"><Heart size={19} fill={isSaved ? "currentColor" : "none"} /></button></div></div>
+    <p className="mt-4 line-clamp-2 text-sm leading-6 text-slate-600">{freelancer.description}</p><div className="mt-4 flex flex-wrap gap-2">{freelancer.skills.map((skill) => <span key={skill} className="rounded-md bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-800">{skill}</span>)}</div>
+    <div className="mt-5 flex items-center justify-between border-t border-slate-100 pt-4 text-sm"><span className="flex items-center gap-1 text-slate-500"><MapPin size={15} />{freelancer.location}</span><span className="flex items-center gap-1 text-slate-500"><BriefcaseBusiness size={15} />{freelancer.jobsCompleted} jobs</span></div>
+    <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2"><Link to={`/freelancer/${freelancer.id}`} className="rounded-lg border border-blue-700 py-2.5 text-center text-sm font-semibold text-blue-800 transition hover:bg-blue-700 hover:text-white">View Profile</Link><button onClick={onInvite} className="rounded-lg bg-[#3263E8] py-2.5 text-center text-sm font-semibold text-white transition hover:bg-blue-800">Invite to Job</button></div>
+  </article>;
+}

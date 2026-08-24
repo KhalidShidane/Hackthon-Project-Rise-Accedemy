@@ -32,7 +32,7 @@ function ProfileAvatar({ user }) {
     return <img src={imageUrl} alt={`${user.name} profile`} className="h-10 w-10 rounded-full object-cover" />;
   }
 
-  return <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 font-bold text-[#2C65F4]">{(user?.name || "U").charAt(0).toUpperCase()}</div>;
+  return <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 font-bold text-[#3263E8]">{(user?.name || "U").charAt(0).toUpperCase()}</div>;
 }
 
 function Gigs() {
@@ -48,18 +48,18 @@ function Gigs() {
     <div className="min-h-screen bg-slate-50 lg:pl-[255px]">
       <aside className="fixed inset-y-0 left-0 z-20 hidden w-[255px] flex-col border-r border-gray-200 bg-white lg:flex">
         <div className="flex h-[72px] items-center gap-3 px-4">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#2C65F4] text-white shadow-sm"><BriefcaseBusiness size={21} /></div>
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#3263E8] text-white shadow-sm"><BriefcaseBusiness size={21} /></div>
           <div><h1 className="text-[18px] font-bold text-gray-900">FreelanceHub</h1><p className="text-[10px] font-medium tracking-wider text-gray-400">WEB3 MARKETPLACE</p></div>
         </div>
 
         <nav className="flex-1 space-y-1 overflow-y-auto px-3 pt-2">
           {menuItems.map((item) => {
             const Icon = item.icon;
-            return <button key={item.name} className={`relative flex h-11 w-full items-center gap-3 rounded-xl px-3 text-left text-[15px] font-medium transition-colors ${item.active ? "bg-blue-50 text-[#2C65F4]" : "text-gray-600 hover:bg-blue-50 hover:text-[#2C65F4]"}`}>
+            return <button key={item.name} className={`relative flex h-11 w-full items-center gap-3 rounded-xl px-3 text-left text-[15px] font-medium transition-colors ${item.active ? "bg-blue-50 text-[#3263E8]" : "text-gray-600 hover:bg-blue-50 hover:text-[#3263E8]"}`}>
               <Icon size={20} /><span>{item.name}</span>{item.badge && <span className="ml-auto rounded-full bg-orange-500 px-1.5 text-[11px] text-white">{item.badge}</span>}
             </button>;
           })}
-          <button className="flex h-11 w-full items-center gap-3 rounded-xl px-3 text-left text-[15px] font-medium text-gray-600 transition-colors hover:bg-blue-50 hover:text-[#2C65F4]"><UserRound size={20} />Profile</button>
+          <button className="flex h-11 w-full items-center gap-3 rounded-xl px-3 text-left text-[15px] font-medium text-gray-600 transition-colors hover:bg-blue-50 hover:text-[#3263E8]"><UserRound size={20} />Profile</button>
         </nav>
 
         <div className="border-t border-gray-200 p-3">

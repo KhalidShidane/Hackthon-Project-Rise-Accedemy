@@ -9,6 +9,8 @@ const PaymentRouter = require("./Router/PaymentRouter");
 const MessageRouter = require("./Router/MessageRouter");
 const ReviewRouter = require("./Router/ReviewRouter");
 const ContractRouter = require("./Router/ContractRouter");
+const FreelancerRouter = require("./Router/FreelancerRouter");
+const InvitationRouter = require("./Router/InvitationRouter");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -23,6 +25,8 @@ app.use("/messages", MessageRouter);
 app.use("/api/payments", PaymentRouter);
 app.use("/api/reviews", ReviewRouter);
 app.use("/api/contracts", ContractRouter);
+app.use("/api/freelancers", FreelancerRouter);
+app.use("/api/invitations", InvitationRouter);
 
 app.use((error, _req, res, _next) => {
   res.status(400).json({ message: error.message || "Request failed" });

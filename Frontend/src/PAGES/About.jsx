@@ -226,7 +226,7 @@ const About = () => {
               </div>
 
               <div className="mt-8 rounded-2xl bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
-                <Briefcase className="mb-4 text-green-600" size={32} />
+                <Briefcase className="mb-4 text-blue-600" size={32} />
 
                 <h3 className="font-bold">
                   Business

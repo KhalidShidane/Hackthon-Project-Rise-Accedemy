@@ -13,13 +13,13 @@ function SectionTwo() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
           <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-wider text-[#2C65F4]">Explore talent</p>
+            <p className="text-sm font-semibold uppercase tracking-wider text-[#3263E8]">Explore talent</p>
             <h2 className="mt-3 text-3xl font-bold text-gray-900 sm:text-4xl">Find help for every project</h2>
             <p className="mt-4 text-lg leading-8 text-gray-600">
               Hire skilled Somali freelancers for the work that moves your business forward.
             </p>
           </div>
-          <Link to="/freelancers" className="text-sm font-semibold text-[#2C65F4] hover:text-blue-700">
+          <Link to="/freelancers" className="text-sm font-semibold text-[#3263E8] hover:text-blue-700">
             View all categories →
           </Link>
         </div>
