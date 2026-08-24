@@ -36,6 +36,12 @@ const ProjectSchema = new mongoose.Schema({
     required : true,
   },
 
+
+  status: {
+  type: String,
+  enum: ["Pending", "Available"],
+  default: "Pending",
+},
   
 });
 
