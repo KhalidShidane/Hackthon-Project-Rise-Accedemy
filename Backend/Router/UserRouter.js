@@ -6,6 +6,9 @@ const UserController = require("../Controller/UserController");
 
 const upload = require("../middleware/upload");
 
+Router.post("/signup", upload.single("profileImage"), UserController.signup);
+Router.post("/login", UserController.login);
+
 // CREATE
 Router.post(
   "/",

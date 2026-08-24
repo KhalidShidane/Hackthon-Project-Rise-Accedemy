@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   Briefcase,
@@ -15,7 +16,19 @@ import {
 } from "lucide-react";
 
 const FreelancerDashboard = () => {
+  const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const imageUrl = user.profileImage
+    ? `http://localhost:5000/images/${user.profileImage}`
+    : "";
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.dispatchEvent(new Event("auth-change"));
+    navigate("/login");
+  };
 
   const pages = [
     { name: "Dashboard", icon: LayoutDashboard },
@@ -75,7 +88,7 @@ const FreelancerDashboard = () => {
             );
           })}
 
-          <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50">
+          <button onClick={logout} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50">
             <LogOut size={19} />
             Logout
           </button>
@@ -83,18 +96,18 @@ const FreelancerDashboard = () => {
 
         <div className="absolute bottom-5 left-4 right-4 bg-gray-50 rounded-xl p-3">
           <div className="flex items-center gap-3">
-            <img
-              src="https://i.pravatar.cc/100?img=47"
-              alt="Profile"
-              className="w-10 h-10 rounded-full"
-            />
+            {imageUrl ? (
+              <img src={imageUrl} alt={`${user.name || "User"} profile`} className="w-10 h-10 rounded-full object-cover" />
+            ) : (
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 font-bold text-blue-700">{(user.name || "U").charAt(0).toUpperCase()}</div>
+            )}
 
             <div>
               <p className="text-sm font-semibold text-gray-800">
-                Fahiima
+                {user.name || "User"}
               </p>
               <p className="text-xs text-gray-500">
-                Freelancer
+                {user.role || "Member"}
               </p>
             </div>
           </div>
@@ -136,11 +149,11 @@ const FreelancerDashboard = () => {
               <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full" />
             </button>
 
-            <img
-              src="https://i.pravatar.cc/100?img=47"
-              alt="Profile"
-              className="w-10 h-10 rounded-full"
-            />
+            {imageUrl ? (
+              <img src={imageUrl} alt={`${user.name || "User"} profile`} className="w-10 h-10 rounded-full object-cover" />
+            ) : (
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 font-bold text-blue-700">{(user.name || "U").charAt(0).toUpperCase()}</div>
+            )}
           </div>
         </header>
 
