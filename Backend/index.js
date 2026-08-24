@@ -25,12 +25,11 @@ mongoose.connect("mongodb://localhost:27017/Hackthone").then(() => {
   app.use ("/project",Roouter)
   
 
-  const Roouter = require("./Router/UserRouter")
 
-  app.use("/user", Roouter)
+app.use("/user", Roouter)
 
 
-  const PaymentRouter = require("./Router/PaymentRouter");
+const PaymentRouter = require("./Router/PaymentRouter");
 
 app.use("/api/payments", PaymentRouter);
 
