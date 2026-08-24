@@ -5,10 +5,12 @@ const path = require("path");
 
 const UserRouter = require("./Router/UserRouter");
 const ProjectRouter = require("./Router/ProjectRouter");
-const PaymentRouter = require("./Router/PaymentRouter");
-const MessageRouter = require("./Router/MessageRouter");
-const ReviewRouter = require("./Router/ReviewRouter");
 const ContractRouter = require("./Router/ContractRouter");
+const ReviewRouter = require("./Router/ReviewRouter");
+const MessageRouter = require("./Router/MessageRouter");
+const PaymentRouter = require("./Router/PaymentRouter");
+const FreelancerRouter = require("./Router/FreelancerRouter");
+const InvitationRouter = require("./Router/InvitationRouter");
 const ProposalRouter = require("./Router/ProposalRouter");
 const AdminRouter = require("./Router/AdminRouter");
 const ContactMessageRouter = require("./Router/ContactMessageRouter");
@@ -29,6 +31,8 @@ app.use("/api/contact-messages", ContactMessageRouter);
 app.use("/api/payments", PaymentRouter);
 app.use("/api/reviews", ReviewRouter);
 app.use("/api/contracts", ContractRouter);
+app.use("/api/freelancers", FreelancerRouter);
+app.use("/api/invitations", InvitationRouter);
 app.use("/api/proposals", ProposalRouter);
 app.use("/api/admin", AdminRouter);
 
