@@ -1,14 +1,14 @@
 const mongoose = require("mongoose");
 
 const express = require('express')
-const ProjectRouter= require("./Router/ProjectRouter");
+const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
 app.use(express.json());
-
-
-app.use(express.json());
+app.use(cors());
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 mongoose.connect("mongodb://localhost:27017/Hackthone").then(() => {
     console.log("connected to database");
@@ -26,12 +26,11 @@ mongoose.connect("mongodb://localhost:27017/Hackthone").then(() => {
   
 
 
-app.use("/user", Roouter)
-
-
 const PaymentRouter = require("./Router/PaymentRouter");
+const MessageRouter = require("./Router/MessageRouter");
 
 app.use("/api/payments", PaymentRouter);
+app.use("/messages", MessageRouter);
 
 
 

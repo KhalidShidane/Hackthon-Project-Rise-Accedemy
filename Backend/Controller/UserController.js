@@ -1,6 +1,5 @@
 const UserScheme = require("../Model/UserScheeme");
 
-// CREATE USER
 const create = async (req, res) => {
   try {
     console.log("BODY:", req.body);
