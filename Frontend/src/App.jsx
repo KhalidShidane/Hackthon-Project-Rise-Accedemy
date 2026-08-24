@@ -1,19 +1,10 @@
-<<<<<<< HEAD
-import Home from "./assets/PAGES/Home";
-import About from "./assets/PAGES/About";
-import contact from "./"
-import {Routes, Route} from "react-router-dom";
-import Header from "./assets/components/Header";
-function App(){
-    return(
-=======
 import Home from "./PAGES/Home";
 import About from "./PAGES/About";
+import Contact from "./PAGES/Contact";
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 function App() {
     return (
->>>>>>> 762a22a056466aa5f9faa6da8b30404038492604
         <>
             <Header />
 
@@ -21,6 +12,7 @@ function App() {
 
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/Contact" element={<Contact />} />
             </Routes>
 
         </>
