@@ -13,5 +13,4 @@ Router.get("/:id", ContractController.getsingle);
 Router.put("/:id", ContractController.update);
 
 Router.delete("/:id", ContractController.deleteContract);
-
 module.exports = Router;

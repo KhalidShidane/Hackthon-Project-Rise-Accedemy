@@ -11,8 +11,8 @@ const ReviewRouter = require("./Router/ReviewRouter");
 const ContractRouter = require("./Router/ContractRouter");
 const ProposalRouter = require("./Router/ProposalRouter");
 const AdminRouter = require("./Router/AdminRouter");
-const ensureAdmin = require("./utils/ensureAdmin");
 const ContactMessageRouter = require("./Router/ContactMessageRouter");
+const ensureAdmin = require("./utils/ensureAdmin");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -38,7 +38,10 @@ app.use((error, _req, res, _next) => {
 
 mongoose
   .connect("mongodb://localhost:27017/Hackthone")
-  .then(async () => { console.log("Connected to database"); await ensureAdmin(); })
+  .then(async () => {
+    console.log("Connected to database");
+    await ensureAdmin();
+  })
   .catch((error) => console.error("Database connection failed:", error.message));
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));
