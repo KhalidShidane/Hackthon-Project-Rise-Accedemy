@@ -15,7 +15,9 @@ mongoose.connect("mongodb://localhost:27017/Hackthone").then(() => {
 
 
   
+  const Router = require("./Router/UserRouter")
 
+  app.use("/user", Router)
   
 app.listen(5000, () => {
   console.log("server is running on port 5000");
