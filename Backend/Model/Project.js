@@ -33,10 +33,24 @@ const ProjectSchema = new mongoose.Schema({
   },
   deadline : {
     type: Number,
+
     required : true,
+
+    required : true
+
   },
 
+
+  status: {
+  type: String,
+  enum: ["Pending", "Available"],
+  default: "Pending",
+},
   
 });
 
+
 module.exports = mongoose.model("Project", ProjectSchema)
+
+
+

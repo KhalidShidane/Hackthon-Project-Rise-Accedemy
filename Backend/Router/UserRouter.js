@@ -6,23 +6,39 @@ const UserController = require("../Controller/UserController");
 
 const upload = require("../middleware/upload");
 
+Router.post("/signup", upload.single("profileImage"), UserController.signup);
+Router.post("/login", UserController.login);
 
-Router.post("/",upload.single("image"),UserController.create
+// CREATE
+Router.post(
+  "/",
+  upload.single("image"),
+  UserController.create
 );
 
-
-Router.get( "/", UserController.read
+// GET ALL
+Router.get(
+  "/",
+  UserController.read
 );
 
-
-Router.get( "/:id",UserController.getsingle
+// GET SINGLE
+Router.get(
+  "/:id",
+  UserController.getsingle
 );
 
-Router.put( "/:id",upload.single("image"), UserController.update
+// UPDATE
+Router.put(
+  "/:id",
+  upload.single("image"),
+  UserController.update
 );
 
-
-Router.delete( "/:id", UserController.deleteUser
+// DELETE
+Router.delete(
+  "/:id",
+  UserController.deleteUser
 );
 
 module.exports = Router;
