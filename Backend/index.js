@@ -4,6 +4,7 @@ const express = require('express')
 
 const App = express();
 
+
 mongoose.connect("mongodb://localhost:27017/Hackthon").then(()=>{
     console.log("Data base Connected")
 })
