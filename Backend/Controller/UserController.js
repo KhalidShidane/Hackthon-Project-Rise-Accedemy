@@ -80,7 +80,6 @@ const login = async (req, res) => {
   }
 };
 
-// CREATE USER
 const create = async (req, res) => {
   try {
     console.log("BODY:", req.body);

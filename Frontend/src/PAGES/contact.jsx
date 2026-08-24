@@ -1,12 +1,21 @@
 import React, { useState } from "react";
+import { useSearchParams } from "react-router-dom";
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const Contact = () => {
+  const [searchParams] = useSearchParams();
+  const projectId = searchParams.get("project") || "";
+  const clientId = searchParams.get("client") || "";
+  const projectName = searchParams.get("projectName") || "";
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    subject: "General",
-    message: "",
+    subject: projectId ? "Job Application" : "General",
+    message: projectName ? `I would like to apply for: ${projectName}.` : "",
   });
+  const [status, setStatus] = useState({ type: "", message: "" });
+  const [isSending, setIsSending] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,19 +26,32 @@ const Contact = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSending(true);
+    setStatus({ type: "", message: "" });
 
-    console.log("Submitted Data:", formData);
+    try {
+      const response = await fetch(`${API_URL}/messages`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          project: projectId || undefined,
+          receiver: clientId || undefined,
+        }),
+      });
+      const data = await response.json();
 
-    alert("Farriintaada waa la diray!");
+      if (!response.ok) throw new Error(data.message || "Farriinta lama diri karin.");
 
-    setFormData({
-      name: "",
-      email: "",
-      subject: "General",
-      message: "",
-    });
+      setStatus({ type: "success", message: "Farriintaada waa la diray. Waad mahadsan tahay!" });
+      setFormData({ name: "", email: "", subject: "General", message: "" });
+    } catch (error) {
+      setStatus({ type: "error", message: error.message || "Waxbaa qaldamay. Fadlan mar kale isku day." });
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
@@ -70,6 +92,11 @@ const Contact = () => {
         </div>
 
         <div className="p-8">
+          {projectName && (
+            <p className="mb-5 rounded-lg bg-blue-50 p-3 text-sm font-medium text-blue-700">
+              Applying for: {projectName}
+            </p>
+          )}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">
@@ -139,10 +166,17 @@ const Contact = () => {
 
             <button
               type="submit"
+              disabled={isSending}
               className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition"
             >
-              Dir Farriinta
+              {isSending ? "Waa la dirayaa..." : "Dir Farriinta"}
             </button>
+
+            {status.message && (
+              <p className={`rounded-lg p-3 text-sm ${status.type === "success" ? "bg-green-50 text-green-700" : "bg-red-50 text-red-700"}`}>
+                {status.message}
+              </p>
+            )}
           </form>
         </div>
       </div>

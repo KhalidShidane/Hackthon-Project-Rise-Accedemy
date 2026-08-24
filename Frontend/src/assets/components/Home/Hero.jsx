@@ -1,7 +1,7 @@
 
 
 import { Link } from "react-router-dom";
-import jobSeekerImage from "../../assets/job-seeker-hero.png";
+import jobSeekerImage from "../../components/Home/job-seeker-hero.png";
 
 function Hero() {
   return (

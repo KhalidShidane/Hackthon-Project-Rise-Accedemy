@@ -20,7 +20,9 @@ const createProject = async (req, res) => {
 
 const getProjects = async (req, res) => {
   try {
-    const projects = await Project.find();
+    const projects = await Project.find()
+      .populate("client", "name email profileImage")
+      .sort({ createdAt: -1 });
 
     res.status(200).json(projects);
   } catch (error) {
@@ -34,7 +36,7 @@ const getProjects = async (req, res) => {
 
 const getProject = async (req, res) => {
   try {
-    const project = await Project.findById(req.params.id);
+    const project = await Project.findById(req.params.id).populate("client", "name email profileImage");
 
     if (!project) {
       return res.status(404).json({
