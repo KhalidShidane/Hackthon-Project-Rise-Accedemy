@@ -11,7 +11,6 @@ function Home() {
             <SectionOne />
             <SectionTwo />
             <SectionThree />
-            <Footer />
         </>
     )
 }
