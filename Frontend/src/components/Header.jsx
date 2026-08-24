@@ -17,11 +17,10 @@ function Header() {
           </Link>
 
           <Link
-            to="/freelancers"
+            to="/gigs"
             className="text-sm font-medium text-gray-600 hover:text-[#2C65F4]"
           >
-            Find Freelancers
-          </Link>
+Dashboard          </Link>
 
           <Link
             to="/jobs"
