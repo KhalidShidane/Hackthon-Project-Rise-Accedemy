@@ -1,13 +1,11 @@
 import Home from "./PAGES/Home";
 import About from "./PAGES/About";
 import Contact from "./PAGES/Contact";
+import Jobs from "./PAGES/Jobs";
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
-<<<<<<< HEAD
 import Footer from "./components/Footer";
-=======
 import Gigs from "./Dashbod/Gigs";
->>>>>>> 4ddcedf08a092e4b92e2a221e9e49cedf1ab9fb6
 function App() {
     return (
         <>
@@ -18,6 +16,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/jobs" element={<Jobs />} />
                 <Route path="/gigs" element={<Gigs />} />
 
             </Routes>
