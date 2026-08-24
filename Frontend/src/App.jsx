@@ -7,6 +7,7 @@ import About from "./PAGES/About";
 import Contact from "./PAGES/Contact";
 import Home from "./PAGES/Home";
 import Jobs from "./PAGES/Jobs";
+import Freelancers from "./PAGES/Freelancers";
 import Login from "./PAGES/Login";
 import Signup from "./PAGES/Signup";
 
@@ -23,6 +24,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/jobs" element={<Jobs />} />
+        <Route path="/freelancers" element={<Freelancers />} />
+        <Route path="/find-talent" element={<Freelancers />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route element={<ProtectedRoute />}>
