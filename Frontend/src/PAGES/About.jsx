@@ -78,7 +78,6 @@ const About = () => {
   return (
     <div className="min-h-screen bg-white text-gray-900">
 
-      {/* ================= HERO ================= */}
       <section className="relative overflow-hidden bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-700">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-white" />
