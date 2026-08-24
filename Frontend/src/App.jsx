@@ -8,6 +8,9 @@ import Home from "./PAGES/Home";
 import Jobs from "./PAGES/Jobs";
 import Login from "./PAGES/Login";
 import Signup from "./PAGES/Signup";
+import ViewProfile from "./PAGES/View Profile";
+import Freelancers from "./Dashbod/Freelancers";
+import About from "./PAGES/About";
 
 function App() {
   const location = useLocation();
@@ -20,9 +23,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/freelancers" element={<Freelancers />} />
+        <Route path="/profile/:id" element={<ViewProfile />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<Gigs />} />
           <Route path="/gigs" element={<Gigs />} />
