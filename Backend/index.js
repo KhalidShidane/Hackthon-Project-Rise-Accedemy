@@ -20,17 +20,22 @@ mongoose.connect("mongodb://localhost:27017/Hackthone").then(() => {
   const Router = require("./Router/UserRouter")
   const Roouter = require("./Router/ProjectRouter")
 
-<<<<<<< HEAD
+
   app.use("/user", Router)
   app.use ("/project",Roouter)
   
-=======
-  const Router = require("./Router/UserRouter")
 
-  app.use("/user", Router)
+  const Roouter = require("./Router/UserRouter")
+
+  app.use("/user", Roouter)
 
 
->>>>>>> 8eb7b3b (waxaan kusoo Daray user kii 1aad)
+  const PaymentRouter = require("./Router/PaymentRouter");
+
+app.use("/api/payments", PaymentRouter);
+
+
+
 app.listen(5000, () => {
   console.log("server is running on port 5000");
 });
