@@ -12,7 +12,7 @@ const roles = [
 function Signup() {
   const navigate = useNavigate();
   const { login } = useAuth();
-  const [form, setForm] = useState({ name: "", email: "", password: "", role: "client", profileImage: null, companyName: "", businessType: "", website: "", bio: "" });
+  const [form, setForm] = useState({ name: "", email: "", password: "", role: "client", profileImage: null, companyName: "", businessType: "", website: "", bio: "", phone: "", location: "", skills: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -28,16 +28,19 @@ function Signup() {
 
     try {
       const formData = new FormData();
-      formData.append("name", form.role === "client" ? form.companyName : form.name);
+      formData.append("name", form.name);
       formData.append("email", form.email);
       formData.append("password", form.password);
       formData.append("role", form.role);
+      formData.append("phone", form.phone);
+      formData.append("location", form.location);
       if (form.role === "client") {
         formData.append("companyName", form.companyName);
         formData.append("businessType", form.businessType);
         formData.append("website", form.website);
       } else {
         formData.append("bio", form.bio);
+        formData.append("skills", form.skills);
       }
       if (form.profileImage) formData.append("profileImage", form.profileImage);
 
@@ -57,7 +60,7 @@ function Signup() {
         <p className="text-sm font-semibold text-[#2C65F4]">CREATE ACCOUNT</p>
         <h1 className="mt-2 text-3xl font-bold text-slate-900">Join FreelanceHub</h1>
         <form onSubmit={handleSubmit} className="mt-7 space-y-5">
-          {form.role === "freelancer" && <label className="block text-sm font-medium text-slate-700">Full name<input name="name" value={form.name} onChange={handleChange} required className="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2.5 outline-none focus:border-[#2C65F4] focus:ring-2 focus:ring-blue-100" /></label>}
+          <label className="block text-sm font-medium text-slate-700">Full name<input name="name" value={form.name} onChange={handleChange} required className="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2.5 outline-none focus:border-[#2C65F4] focus:ring-2 focus:ring-blue-100" /></label>
           <label className="block text-sm font-medium text-slate-700">Email<input name="email" type="email" value={form.email} onChange={handleChange} required className="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2.5 outline-none focus:border-[#2C65F4] focus:ring-2 focus:ring-blue-100" /></label>
           <label className="block text-sm font-medium text-slate-700">Password<input name="password" type="password" minLength="6" value={form.password} onChange={handleChange} required className="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2.5 outline-none focus:border-[#2C65F4] focus:ring-2 focus:ring-blue-100" /></label>
           <label className="block text-sm font-medium text-slate-700">Profile photo <span className="font-normal text-slate-400">(optional)</span><input name="profileImage" type="file" accept="image/*" onChange={handleChange} className="mt-2 block w-full text-sm text-slate-600 file:mr-4 file:rounded-lg file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:font-semibold file:text-[#2C65F4] hover:file:bg-blue-100" /></label>
@@ -75,14 +78,25 @@ function Signup() {
             </div>
           </fieldset>
 
-          {form.role === "client" && <div className="space-y-5 rounded-xl border border-blue-100 bg-blue-50/50 p-4">
-            <div><h2 className="text-sm font-bold text-slate-800">Company details</h2><p className="mt-1 text-xs text-slate-500">Use your company information to create the client account.</p></div>
-            <label className="block text-sm font-medium text-slate-700">Company name<input name="companyName" value={form.companyName} onChange={handleChange} required className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 outline-none focus:border-[#2C65F4] focus:ring-2 focus:ring-blue-100" /></label>
-            <label className="block text-sm font-medium text-slate-700">Business type<select name="businessType" value={form.businessType} onChange={handleChange} required className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 outline-none focus:border-[#2C65F4] focus:ring-2 focus:ring-blue-100"><option value="">Select business type</option><option>Technology</option><option>Retail & E-commerce</option><option>Marketing & Media</option><option>Education</option><option>Other</option></select></label>
-            <label className="block text-sm font-medium text-slate-700">Company website <span className="font-normal text-slate-400">(optional)</span><input name="website" type="url" value={form.website} onChange={handleChange} placeholder="https://example.com" className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 outline-none focus:border-[#2C65F4] focus:ring-2 focus:ring-blue-100" /></label>
-          </div>}
+          {form.role === "client" ? (
+            <div className="space-y-5 rounded-xl border border-blue-100 bg-blue-50/50 p-4">
+              <div><h2 className="text-sm font-bold text-slate-800">Company details</h2><p className="mt-1 text-xs text-slate-500">This helps freelancers understand who is hiring them.</p></div>
+              <label className="block text-sm font-medium text-slate-700">Company name<input name="companyName" value={form.companyName} onChange={handleChange} required className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 outline-none focus:border-[#2C65F4] focus:ring-2 focus:ring-blue-100" /></label>
+              <label className="block text-sm font-medium text-slate-700">Business type<select name="businessType" value={form.businessType} onChange={handleChange} required className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 outline-none focus:border-[#2C65F4] focus:ring-2 focus:ring-blue-100"><option value="">Select business type</option><option>Technology</option><option>Retail & E-commerce</option><option>Marketing & Media</option><option>Education</option><option>Other</option></select></label>
+              <label className="block text-sm font-medium text-slate-700">Company website <span className="font-normal text-slate-400">(optional)</span><input name="website" type="url" value={form.website} onChange={handleChange} placeholder="https://example.com" className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 outline-none focus:border-[#2C65F4] focus:ring-2 focus:ring-blue-100" /></label>
+            </div>
+          ) : (
+            <div className="space-y-5 rounded-xl border border-violet-100 bg-violet-50/50 p-4">
+              <div><h2 className="text-sm font-bold text-slate-800">Freelancer profile</h2><p className="mt-1 text-xs text-slate-500">Add the details clients need to trust and hire you.</p></div>
+              <label className="block text-sm font-medium text-slate-700">Professional description<textarea name="bio" value={form.bio} onChange={handleChange} required rows="4" placeholder="Tell clients about your experience and the work you do." className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 outline-none focus:border-[#2C65F4] focus:ring-2 focus:ring-blue-100" /></label>
+              <label className="block text-sm font-medium text-slate-700">Skills<input name="skills" value={form.skills} onChange={handleChange} required placeholder="React, UI/UX Design, Node.js" className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 outline-none focus:border-[#2C65F4] focus:ring-2 focus:ring-blue-100" /></label>
+            </div>
+          )}
 
-          {form.role === "freelancer" && <label className="block rounded-xl border border-violet-100 bg-violet-50/50 p-4 text-sm font-medium text-slate-700">Professional description<textarea name="bio" value={form.bio} onChange={handleChange} required rows="4" maxLength="500" placeholder="Tell clients about your experience, services, and the work you do." className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 outline-none focus:border-[#2C65F4] focus:ring-2 focus:ring-blue-100" /></label>}
+          <div className="grid gap-5 sm:grid-cols-2">
+            <label className="block text-sm font-medium text-slate-700">Phone number <span className="font-normal text-slate-400">(optional)</span><input name="phone" value={form.phone} onChange={handleChange} placeholder="+252 ..." className="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2.5 outline-none focus:border-[#2C65F4] focus:ring-2 focus:ring-blue-100" /></label>
+            <label className="block text-sm font-medium text-slate-700">Location <span className="font-normal text-slate-400">(optional)</span><input name="location" value={form.location} onChange={handleChange} placeholder="Mogadishu, Somalia" className="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2.5 outline-none focus:border-[#2C65F4] focus:ring-2 focus:ring-blue-100" /></label>
+          </div>
 
           {error && <p className="rounded-lg bg-red-50 p-3 text-sm text-red-700">{error}</p>}
           <button disabled={loading} className="w-full rounded-lg bg-[#2C65F4] py-3 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60">{loading ? "Creating account..." : "Create account"}</button>

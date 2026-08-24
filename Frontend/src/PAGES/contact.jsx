@@ -26,6 +26,7 @@ const Contact = () => {
     }));
   };
 
+<<<<<<< HEAD
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSending(true);
@@ -51,6 +52,25 @@ const Contact = () => {
       setStatus({ type: "error", message: error.message || "Waxbaa qaldamay. Fadlan mar kale isku day." });
     } finally {
       setIsSending(false);
+=======
+  const [status, setStatus] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("");
+
+    try {
+      const response = await fetch("http://localhost:5000/api/contact-messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (!response.ok) throw new Error("Unable to send message");
+      setStatus("Farriintaada waa la diray. Waxay ka muuqan doontaa dashboard-ka client-ka.");
+      setFormData({ name: "", email: "", subject: "General", message: "" });
+    } catch {
+      setStatus("Farriinta lama diri karin. Hubi in backend-ku shaqaynayo.");
+>>>>>>> 3af1025 (New One)
     }
   };
 
@@ -171,12 +191,16 @@ const Contact = () => {
             >
               {isSending ? "Waa la dirayaa..." : "Dir Farriinta"}
             </button>
+<<<<<<< HEAD
 
             {status.message && (
               <p className={`rounded-lg p-3 text-sm ${status.type === "success" ? "bg-green-50 text-green-700" : "bg-red-50 text-red-700"}`}>
                 {status.message}
               </p>
             )}
+=======
+            {status && <p className="text-sm font-medium text-blue-700">{status}</p>}
+>>>>>>> 3af1025 (New One)
           </form>
         </div>
       </div>
