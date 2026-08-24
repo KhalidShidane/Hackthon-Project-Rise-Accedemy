@@ -12,7 +12,7 @@ function Hero() {
             Somalia&apos;s freelance marketplace
           </p>
           <h1 className="max-w-xl text-4xl font-bold leading-tight text-gray-900 sm:text-5xl">
-            Find Somali Talent For Your Next Project
+            Find Somali Talent For Your Next Project.
           </h1>
           <p className="mt-6 max-w-lg text-lg leading-8 text-gray-600">
             Connect with skilled freelancers, get great work donej, and grow your ideas with confidence.
