@@ -23,10 +23,20 @@ const PaymentRouter = require("./Router/PaymentRouter");
 const ReviewRouter = require("./Router/PaymentRouter");
 
 app.use("/api/payments", PaymentRouter);
-app.use("/user", Router)
-  app.use ("/project",Roouter)
+
+
+const MessageRouter = require("./Router/PaymentRouter");
+
 app.use("/api/payments", MessageRouter);
+
+
+const ReviewRouter = require("./Router/PaymentRouter");
+
 app.use("/api/payments", ReviewRouter);
+
+
+const ContractRouter = require("./Router/PaymentRouter");
+
 app.use("/api/payments", ContractRouter);
 
 app.use((error, req, res, next) => {

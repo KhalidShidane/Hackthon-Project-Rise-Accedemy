@@ -1,34 +1,37 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+
+import Home from "./PAGES/Home";
+import About from "./PAGES/About";
+import Contact from "./PAGES/Contact";
+import { Routes, Route, useLocation } from "react-router-dom";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import Gigs from "./Dashbod/Gigs";
+import { ProtectedRoute } from "./components/RouteGuards";
+import Login from "./PAGES/Login";
+import Signup from "./PAGES/Signup";
 
 function App() {
+    const location = useLocation();
+    const isDashboard = location.pathname === "/dashboard" || location.pathname === "/gigs";
 
+    return (
+        <>
+            {!isDashboard && <Header />}
 
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route element={<ProtectedRoute />}>
+                    <Route path="/dashboard" element={<Gigs />} />
+                    <Route path="/gigs" element={<Gigs />} />
+                </Route>
+
+            </Routes>
+            {!isDashboard && <Footer />}
+
 
       <div className="ticks"></div>
 
