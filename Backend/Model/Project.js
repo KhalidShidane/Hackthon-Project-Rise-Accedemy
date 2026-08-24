@@ -33,7 +33,11 @@ const ProjectSchema = new mongoose.Schema({
   },
   deadline : {
     type: Number,
+
     required : true,
+
+    required : true
+
   },
 
 
@@ -45,4 +49,8 @@ const ProjectSchema = new mongoose.Schema({
   
 });
 
+
 module.exports = mongoose.model("Project", ProjectSchema)
+
+
+
