@@ -28,6 +28,24 @@ const userSchema = new mongoose.Schema(
       default: "client",
     },
 
+    companyName: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+
+    businessType: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+
+    website: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+
     profileImage: {
       type: String,
       default: "",
