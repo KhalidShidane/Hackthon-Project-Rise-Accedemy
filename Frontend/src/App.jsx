@@ -1,5 +1,6 @@
 import Home from "./assets/PAGES/Home";
 import About from "./assets/PAGES/About";
+import contact from "./"
 import {Routes, Route} from "react-router-dom";
 import Header from "./assets/components/Header";
 function App(){
