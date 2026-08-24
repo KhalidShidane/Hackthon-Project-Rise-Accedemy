@@ -1,9 +1,8 @@
-import Hero from "../components/Home/Hero";
-import SectionOne from "../components/Home/SectionOne";
-import SectionTwo from "../components/Home/SectionTwo";
-import RecentWorks from "../components/Home/RecentWorks";
-import SectionThree from "../components/Home/SectionThree";
-import Footer from "../components/Footer";
+import Hero from "../assets/components/Home/Hero";
+import SectionOne from "../assets/components/Home/SectionOne";
+import SectionTwo from "../assets/components/Home/SectionTwo";
+import RecentWorks from "../assets/components/Home/RecentWorks";
+import SectionThree from "../assets/components/Home/SectionThree";
 
 function Home() {
     return (

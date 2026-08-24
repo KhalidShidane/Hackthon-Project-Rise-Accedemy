@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FiArrowRight, FiBriefcase, FiClock } from "react-icons/fi";
-import { sampleProjects } from "../../data/sampleProjects";
+import { sampleProjects } from "../../../data/sampleProjects";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -16,6 +16,10 @@ function getStatusClasses(status) {
   if (status === "Available") return "bg-green-50 text-green-700";
   if (status === "Pending") return "bg-amber-50 text-amber-700";
   return "bg-gray-100 text-gray-600";
+}
+
+function isAvailable(status) {
+  return status?.trim().toLowerCase() === "available";
 }
 
 function RecentWorks() {
@@ -80,15 +84,15 @@ function RecentWorks() {
                   <p className="mt-5 text-sm font-semibold text-[#2C65F4]">{project.category}</p>
                   <h3 className="mt-2 text-xl font-bold text-gray-900">{project.name}</h3>
                   <p className="mt-3 flex-1 leading-7 text-gray-600">{project.description}</p>
+                  {isAvailable(project.status) && (
+                    <Link to={`/contact?project=${project._id}`} className="mt-5 rounded-lg bg-[#2C65F4] px-4 py-3 text-center text-sm font-semibold text-white transition hover:bg-blue-700">
+                      Invite Job
+                    </Link>
+                  )}
                   <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-4 text-sm">
                     <span className="font-bold text-gray-900">Budget: {project.Budget}</span>
                     <span className="inline-flex items-center gap-1 text-gray-500"><FiClock /> {project.deadline} days</span>
                   </div>
-                  {project.status === "Available" && (
-                    <Link to={`/contact?project=${project._id}`} className="mt-5 rounded-lg bg-[#2C65F4] px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-blue-700">
-                      Invite Job
-                    </Link>
-                  )}
                 </div>
               </article>
             ))}

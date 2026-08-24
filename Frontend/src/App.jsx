@@ -3,8 +3,8 @@ import About from "./PAGES/About";
 import Contact from "./PAGES/Contact";
 import Jobs from "./PAGES/Jobs";
 import { Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Header from "./assets/components/Header";
+import Footer from "./assets/components/Footer";
 import Gigs from "./Dashbod/Gigs";
 function App() {
     return (
