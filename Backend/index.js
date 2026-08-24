@@ -12,6 +12,7 @@ const ContractRouter = require("./Router/ContractRouter");
 const ProposalRouter = require("./Router/ProposalRouter");
 const AdminRouter = require("./Router/AdminRouter");
 const ensureAdmin = require("./utils/ensureAdmin");
+const ContactMessageRouter = require("./Router/ContactMessageRouter");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -23,6 +24,8 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/user", UserRouter);
 app.use("/project", ProjectRouter);
 app.use("/messages", MessageRouter);
+app.use("/api/messages", MessageRouter);
+app.use("/api/contact-messages", ContactMessageRouter);
 app.use("/api/payments", PaymentRouter);
 app.use("/api/reviews", ReviewRouter);
 app.use("/api/contracts", ContractRouter);

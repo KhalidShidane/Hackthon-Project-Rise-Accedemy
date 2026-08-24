@@ -44,6 +44,10 @@ const userSchema = new mongoose.Schema(
 
     lastLogin: { type: Date, default: null },
 
+    companyName: { type: String, trim: true, default: "" },
+    businessType: { type: String, trim: true, default: "" },
+    website: { type: String, trim: true, default: "" },
+
     profileImage: {
       type: String,
       default: "",

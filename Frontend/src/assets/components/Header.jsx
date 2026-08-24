@@ -24,6 +24,7 @@ function Header() {
           <Link to="/" className="text-sm font-medium text-[#2C65F4]">Home</Link>
           {user && user.role !== "admin" && <Link to={user.role === "company" ? "/company/dashboard" : "/dashboard"} className="text-sm font-medium text-gray-600 hover:text-[#2C65F4]">Dashboard</Link>}
           <Link to="/jobs" className="text-sm font-medium text-gray-600 hover:text-[#2C65F4]">Find Work</Link>
+          <Link to="/freelancers" className="text-sm font-medium text-gray-600 hover:text-[#2C65F4]">Find Talents</Link>
           <Link to="/about" className="text-sm font-medium text-gray-600 hover:text-[#2C65F4]">About</Link>
           <Link to="/contact" className="text-sm font-medium text-gray-600 hover:text-[#2C65F4]">Contact</Link>
         </nav>

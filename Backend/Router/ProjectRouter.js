@@ -1,4 +1,5 @@
 const express = require("express");
+const upload = require("../middleware/upload");
 
 const router = express.Router();
 
@@ -11,7 +12,7 @@ const {
 } = require("../Controller/ProjectController");
 
 
-router.post("/", createProject);
+router.post("/", upload.single("image"), createProject);
 
 
 router.get("/", getProjects);

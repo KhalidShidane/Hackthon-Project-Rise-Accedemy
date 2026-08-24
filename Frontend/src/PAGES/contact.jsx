@@ -171,7 +171,6 @@ const Contact = () => {
             >
               {isSending ? "Waa la dirayaa..." : "Dir Farriinta"}
             </button>
-
             {status.message && (
               <p className={`rounded-lg p-3 text-sm ${status.type === "success" ? "bg-green-50 text-green-700" : "bg-red-50 text-red-700"}`}>
                 {status.message}

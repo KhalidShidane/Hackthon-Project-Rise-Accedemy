@@ -21,6 +21,8 @@ import Jobs from "./PAGES/Jobs";
 import Login from "./PAGES/Login";
 import Signup from "./PAGES/Signup";
 import CompanyDashboard from "./PAGES/CompanyDashboard";
+import Freelancers from "./Dashbod/Freelancers";
+import ViewProfile from "./PAGES/View Profile";
 
 function App() {
   const location = useLocation();
@@ -35,12 +37,17 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/jobs" element={<Jobs />} />
+        <Route path="/freelancers" element={<Freelancers />} />
+        <Route path="/profile/:id" element={<ViewProfile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<Gigs />} />
           <Route path="/gigs" element={<Gigs />} />
+          <Route path="/projects" element={<Gigs />} />
+          <Route path="/messages" element={<Gigs />} />
+          <Route path="/profile" element={<Gigs />} />
           <Route path="/company/dashboard" element={<CompanyDashboard />} />
         </Route>
         <Route element={<AdminRoute />}>
