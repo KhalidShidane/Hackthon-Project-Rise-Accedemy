@@ -20,7 +20,6 @@ import Home from "./PAGES/Home";
 import Jobs from "./PAGES/Jobs";
 import Login from "./PAGES/Login";
 import Signup from "./PAGES/Signup";
-import CompanyDashboard from "./PAGES/CompanyDashboard";
 import Freelancers from "./Dashbod/Freelancers";
 import ViewProfile from "./PAGES/View Profile";
 
@@ -48,7 +47,6 @@ function App() {
           <Route path="/projects" element={<Gigs />} />
           <Route path="/messages" element={<Gigs />} />
           <Route path="/profile" element={<Gigs />} />
-          <Route path="/company/dashboard" element={<CompanyDashboard />} />
         </Route>
         <Route element={<AdminRoute />}>
           <Route element={<AdminLayout />}>
