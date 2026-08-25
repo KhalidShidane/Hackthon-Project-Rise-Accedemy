@@ -15,7 +15,7 @@ function getImageUrl(image) {
 function getStatusClasses(status) {
   if (status === "Available") return "bg-blue-50 text-blue-700";
   if (status === "Pending") return "bg-amber-50 text-amber-700";
-  return "bg-gray-100 text-gray-600";
+  return "bg-gray-100 text-gray-700";
 }
 
 function isAvailable(status) {
