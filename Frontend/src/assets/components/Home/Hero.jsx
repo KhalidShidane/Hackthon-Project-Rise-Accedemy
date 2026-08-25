@@ -8,7 +8,7 @@ function Hero() {
     <section className="bg-[#f6f8ff]">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-16 md:grid-cols-2 md:py-24">
         <div>
-          <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-[#2C65F4]">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-[#3263E8]">
             Somalia&apos;s freelance marketplace
           </p>
           <h1 className="max-w-xl text-4xl font-bold leading-tight text-gray-900 sm:text-5xl">
@@ -21,13 +21,13 @@ function Hero() {
           <div className="mt-8 flex flex-wrap gap-4">
             <Link
               to="/signup"
-              className="rounded-lg bg-[#2C65F4] px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
+              className="rounded-lg bg-[#3263E8] px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
             >
               Post a Job
             </Link>
             <Link
               to="/jobs"
-              className="rounded-lg border border-[#2C65F4] px-6 py-3 text-sm font-semibold text-[#2C65F4] transition hover:bg-blue-50"
+              className="rounded-lg border border-[#3263E8] px-6 py-3 text-sm font-semibold text-[#3263E8] transition hover:bg-blue-50"
             >
               Find Work
             </Link>

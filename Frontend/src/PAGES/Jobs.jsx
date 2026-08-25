@@ -13,7 +13,7 @@ function getImageUrl(image) {
 }
 
 function getStatusClasses(status) {
-  if (status === "Available") return "bg-green-50 text-green-700";
+  if (status === "Available") return "bg-blue-50 text-blue-700";
   if (status === "Pending") return "bg-amber-50 text-amber-700";
   return "bg-gray-100 text-gray-600";
 }
@@ -47,7 +47,7 @@ function Jobs() {
   return (
     <main className="min-h-screen bg-[#f8faff] py-16">
       <div className="mx-auto max-w-7xl px-6">
-        <p className="text-sm font-semibold uppercase tracking-wider text-[#2C65F4]">FreelanceHub Somalia</p>
+        <p className="text-sm font-semibold uppercase tracking-wider text-[#3263E8]">FreelanceHub Somalia</p>
         <h1 className="mt-3 text-4xl font-bold text-gray-900">All Jobs</h1>
         <p className="mt-4 text-lg text-gray-600">Browse projects and invite the jobs that are available.</p>
 
@@ -67,15 +67,15 @@ function Jobs() {
                 )}
                 <div className="flex h-full flex-col p-6">
                   <div className="flex items-start justify-between gap-4">
-                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-[#2C65F4]"><FiBriefcase size={21} /></span>
+                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-[#3263E8]"><FiBriefcase size={21} /></span>
                   <span className={`rounded-full px-3 py-1 text-xs font-semibold ${getStatusClasses(project.status)}`}>{project.status}</span>
                 </div>
                 {isAvailable(project.status) && (
-                  <Link to={`/contact?project=${project._id}`} className="mt-5 inline-flex w-full items-center justify-center rounded-lg bg-[#2C65F4] px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-700">
+                  <Link to={`/contact?project=${project._id}`} className="mt-5 inline-flex w-full items-center justify-center rounded-lg bg-[#3263E8] px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-700">
                     Invite Job
                   </Link>
                 )}
-                <p className="mt-5 text-sm font-semibold text-[#2C65F4]">{project.category}</p>
+                <p className="mt-5 text-sm font-semibold text-[#3263E8]">{project.category}</p>
                 <h2 className="mt-2 text-xl font-bold text-gray-900">{project.name}</h2>
                 <p className="mt-3 flex-1 leading-7 text-gray-600">{project.description}</p>
                 <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-4 text-sm"><span className="font-bold text-gray-900">{project.Budget}</span><span className="inline-flex items-center gap-1 text-gray-500"><FiClock /> {project.deadline} days</span></div>

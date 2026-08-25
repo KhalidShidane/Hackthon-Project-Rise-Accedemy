@@ -5,14 +5,16 @@ const path = require("path");
 
 const UserRouter = require("./Router/UserRouter");
 const ProjectRouter = require("./Router/ProjectRouter");
-const PaymentRouter = require("./Router/PaymentRouter");
-const MessageRouter = require("./Router/MessageRouter");
-const ReviewRouter = require("./Router/ReviewRouter");
 const ContractRouter = require("./Router/ContractRouter");
+const ReviewRouter = require("./Router/ReviewRouter");
+const MessageRouter = require("./Router/MessageRouter");
+const PaymentRouter = require("./Router/PaymentRouter");
+const FreelancerRouter = require("./Router/FreelancerRouter");
+const InvitationRouter = require("./Router/InvitationRouter");
 const ProposalRouter = require("./Router/ProposalRouter");
 const AdminRouter = require("./Router/AdminRouter");
-const ensureAdmin = require("./utils/ensureAdmin");
 const ContactMessageRouter = require("./Router/ContactMessageRouter");
+const ensureAdmin = require("./utils/ensureAdmin");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -29,6 +31,8 @@ app.use("/api/contact-messages", ContactMessageRouter);
 app.use("/api/payments", PaymentRouter);
 app.use("/api/reviews", ReviewRouter);
 app.use("/api/contracts", ContractRouter);
+app.use("/api/freelancers", FreelancerRouter);
+app.use("/api/invitations", InvitationRouter);
 app.use("/api/proposals", ProposalRouter);
 app.use("/api/admin", AdminRouter);
 
@@ -38,7 +42,10 @@ app.use((error, _req, res, _next) => {
 
 mongoose
   .connect("mongodb://localhost:27017/Hackthone")
-  .then(async () => { console.log("Connected to database"); await ensureAdmin(); })
+  .then(async () => {
+    console.log("Connected to database");
+    await ensureAdmin();
+  })
   .catch((error) => console.error("Database connection failed:", error.message));
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));

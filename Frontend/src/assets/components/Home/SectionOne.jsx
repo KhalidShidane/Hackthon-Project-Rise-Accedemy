@@ -21,7 +21,7 @@ function SectionOne() {
     <section className="bg-white py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-6">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-wider text-[#2C65F4]">
+          <p className="text-sm font-semibold uppercase tracking-wider text-[#3263E8]">
             Simple and fast
           </p>
           <h2 className="mt-3 text-3xl font-bold text-gray-900 sm:text-4xl">
@@ -38,7 +38,7 @@ function SectionOne() {
               key={step.number}
               className="rounded-2xl border border-gray-100 bg-[#f8faff] p-7 shadow-sm"
             >
-              <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#2C65F4] text-sm font-bold text-white">
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#3263E8] text-sm font-bold text-white">
                 {step.number}
               </span>
               <h3 className="mt-5 text-xl font-bold text-gray-900">{step.title}</h3>
