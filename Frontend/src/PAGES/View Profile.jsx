@@ -22,7 +22,11 @@ function ViewProfile() {
 		return () => { active = false; };
 	}, [id]);
 
-	const skills = profile.skills?.length ? profile.skills : demoFreelancers[0].skills;
+	const skills = Array.isArray(profile?.skills) && profile.skills.length
+		? profile.skills
+		: Array.isArray(demoFreelancers[0]?.skills)
+			? demoFreelancers[0].skills
+			: [];
 
 	return (
 		<main className="min-h-screen bg-[#f7f9fc] pb-20 text-slate-900">
@@ -56,7 +60,13 @@ function ViewProfile() {
 					</section>
 					<section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
 						<h2 className="text-xl font-bold">Core skills</h2>
-						<div className="mt-5 flex flex-wrap gap-2">{skills.map((skill) => <span key={skill} className="rounded-md bg-blue-50 px-3 py-2 text-sm font-semibold text-[#2C65F4]">{skill}</span>)}</div>
+						<div className="mt-5 flex flex-wrap gap-2">
+							{skills.map((skill, index) => (
+								<span key={`${skill}-${index}`} className="rounded-md bg-blue-50 px-3 py-2 text-sm font-semibold text-[#2C65F4]">
+									{skill}
+								</span>
+							))}
+						</div>
 					</section>
 				</div>
 				<aside className="space-y-6">
